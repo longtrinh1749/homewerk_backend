@@ -2,6 +2,7 @@ import flask
 import os
 from . import api, models, services
 import config
+from flask_cors import CORS
 
 def create_app():
 
@@ -16,6 +17,7 @@ def create_app():
 
     models.init_app(app)
     api.init_app(app)
+    CORS(app)
 
     return app
 

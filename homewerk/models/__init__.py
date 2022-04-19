@@ -6,3 +6,5 @@ from .base import (
 )
 
 from .user import User
+from .course import Course
+from .user_course import UserCourse

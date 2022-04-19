@@ -1,6 +1,9 @@
 import flask_restx as _fr
 from flask import Blueprint
-from . import user
+from . import (
+    user,
+    course
+)
 
 api_bp = Blueprint('api', __name__)
 api = _fr.Api(
@@ -11,3 +14,4 @@ api = _fr.Api(
 def init_app(app, **kwargs):
     app.register_blueprint(api_bp)
     api.add_namespace(user.user_ns)
+    api.add_namespace(course.course_ns)
