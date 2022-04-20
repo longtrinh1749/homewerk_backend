@@ -13,6 +13,7 @@ class CourseService(Singleton):
         if data.get('id'):
             query = query.filter(m.Course.id == data.get('id'))
         if data.get('user_id'):
+            query = query.filter(m.UserCourse.course_id == m.Course.id)
             query = query.filter(m.UserCourse.user_id == data.get('user_id'))
         courses = query.order_by(desc(m.Course.id)).all()
         return courses

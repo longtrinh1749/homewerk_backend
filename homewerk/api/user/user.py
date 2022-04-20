@@ -44,3 +44,15 @@ class Users(_fr.Resource):
     def put(self):
         data = request.json
         return service.update_user(data)
+
+get_students_res_schema = user_ns.model('GetStudentsResponse', {
+    'students': fields.List(fields.Nested(user_ns.model('StudentsResponseData', get_user_response_model)))
+})
+@user_ns.route('/course/students', methods=['GET'])
+class CourseStudent(_fr.Resource):
+    @user_ns.marshal_with(get_students_res_schema)
+    @user_ns.doc(params={'course_id': 'Course ID'})
+    def get(self):
+        data = request.args
+        students = service.get_students_by_course(data)
+        return {'students': students}
