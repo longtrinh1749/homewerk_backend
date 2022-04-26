@@ -8,3 +8,7 @@ from .base import (
 from .user import User
 from .course import Course
 from .user_course import UserCourse
+from .assignment import Assignment
+from .work import Work
+from .work_objects import WorkObject
+from .submit import Submit
