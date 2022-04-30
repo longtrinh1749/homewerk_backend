@@ -15,7 +15,7 @@ class CourseService(Singleton):
         if data.get('user_id'):
             query = query.filter(m.UserCourse.course_id == m.Course.id)
             query = query.filter(m.UserCourse.user_id == data.get('user_id'))
-        courses = query.order_by(desc(m.Course.id)).all()
+        courses = query.filter(m.Course.active == True).order_by(desc(m.Course.id)).all()
         return courses
 
     def create_course(self, data):
@@ -38,6 +38,7 @@ class CourseService(Singleton):
         course.clazz = data.get('class')
         course.school = data.get('school')
         course.school_year = data.get('school_year')
+        course.active = data.get('active')
         m.db.session.commit()
         return course
 

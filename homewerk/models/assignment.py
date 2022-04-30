@@ -10,5 +10,6 @@ class Assignment(db.Model, m.TimestampMixin):
     due = Column(DateTime)
     course_id = Column(Integer, ForeignKey('courses.id'))
     active = Column(Boolean, default=True)
+    instruction = Column(String(500))
 
     course = db.relationship('Course', backref='assignments')

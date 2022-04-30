@@ -12,6 +12,7 @@ get_course_response_model = {
     'school_year': fields.String(attribute='school_year_to_str'),
     'year': fields.String(attribute='school_year'),
     'created_by': fields.Integer,
+    'active': fields.Boolean,
 }
 
 get_courses_res_model = {
@@ -50,6 +51,7 @@ update_course_request_model = {
     'class': fields.String,
     'school': fields.String,
     'school_year': fields.Integer,
+    'active': fields.Boolean,
 }
 
 # TODO: create route to use

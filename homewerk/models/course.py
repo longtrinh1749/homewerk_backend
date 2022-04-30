@@ -1,7 +1,7 @@
 from homewerk import models as m
 from homewerk.models import db
 from .base import TimestampMixin
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, Boolean
 
 
 class Course(db.Model, TimestampMixin):
@@ -13,6 +13,7 @@ class Course(db.Model, TimestampMixin):
     school_year = Column(Integer)
     created_by = Column(Integer, ForeignKey('users.id'))
     created_user = db.relationship('User', backref='created_courses')
+    active = Column(Boolean, nullable=False, default=True)
 
     @property
     def school_year_to_str(self):

@@ -1,6 +1,6 @@
 from homewerk.models import db
 from homewerk import models as m
-from sqlalchemy import String, Integer, DateTime, ForeignKey, Column, Text
+from sqlalchemy import String, Integer, DateTime, ForeignKey, Column, Text, Boolean
 
 class Work(db.Model, m.TimestampMixin):
     __tablename__ = 'works'
@@ -10,5 +10,6 @@ class Work(db.Model, m.TimestampMixin):
     priority = Column(Integer, nullable=False) # priority: work order
     # TODO: co the bo sung next, previous_image cho tinh nang nop lai bai
     canvas_json = Column(Text)
+    active = Column(Boolean, nullable=False, default=True)
 
     submit = db.relationship('Submit', backref='works')

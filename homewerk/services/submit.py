@@ -43,7 +43,7 @@ class SubmitService(Singleton):
 
     def add_submit(self, data):
         submit = m.Submit()
-        submit.status = 'Submitted'
+        submit.status = 'submitted'
         user_id = data.get('user_id')
         if not user_id:
             return

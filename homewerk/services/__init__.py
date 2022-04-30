@@ -11,3 +11,4 @@ from . import (
 from .user import UserService
 from .assignment import AssignmentService
 from .work import WorkService
+from .submit import SubmitService

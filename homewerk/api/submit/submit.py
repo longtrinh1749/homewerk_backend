@@ -24,12 +24,13 @@ submit_put_req_model = submit_ns.model('SubmitPutReqModel', submit_put_req_schem
 @submit_ns.route('', methods=['GET', 'POST', 'PUT'])
 class Submit(_fr.Resource):
     @submit_ns.marshal_with(submits_res_model)
-    @submit_ns.doc({'id': 'ID', 'user_id': 'User ID', 'assignment_id': 'Assignment ID', 'status': 'Status'})
+    @submit_ns.doc(params={'id': 'ID', 'user_id': 'User ID', 'assignment_id': 'Assignment ID'})
     def get(self):
         data = request.args
         submits = service.get_submits(data)
         return {'submits': submits}
 
+    # Post many works, cannot done yet
     @submit_ns.marshal_with(submit_res_model)
     @submit_ns.expect(submit_post_req_parser)
     def post(self):

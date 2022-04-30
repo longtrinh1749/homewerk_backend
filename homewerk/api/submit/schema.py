@@ -2,6 +2,7 @@ from flask_restx import fields, reqparse
 from werkzeug.datastructures import FileStorage
 
 submit_res_schema = {
+    'id': fields.Integer,
     'assignment_id': fields.Integer,
     'user_id': fields.Integer,
     'status': fields.String,
@@ -16,6 +17,7 @@ submit_post_req_schema = {
 submit_put_req_schema = {
     'assignment_id': fields.Integer,
     'user_id': fields.Integer,
+    'id': fields.Integer,
     'status': fields.String,
     'result': fields.Integer
 }
