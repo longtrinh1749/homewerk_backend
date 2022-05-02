@@ -8,6 +8,7 @@ from homewerk.services import WorkService
 from .schema import work_post_req_parser
 from .schema import work_put_req_schema
 from .schema import work_res_schema
+from .schema import object_res_schema
 from homewerk.utils import allowed_file, save_file
 
 work_ns = _fr.Namespace(
@@ -17,14 +18,23 @@ work_ns = _fr.Namespace(
 service = WorkService.get_instance()
 
 work_put_req_model = work_ns.model('WorkPutReq', work_put_req_schema)
-work_res_model = work_ns.model('WorkRes', work_res_schema)
+object_res_model = work_ns.model('ObjectRes', object_res_schema)
+work_res_model = work_ns.model('WorkRes', {
+    'id': _fr.fields.Integer,
+    'submit_id': _fr.fields.Integer,
+    'image_path': _fr.fields.String,
+    'priority': _fr.fields.Integer,
+    'canvas_json': _fr.fields.String,
+    'active': _fr.fields.Boolean,
+    'objects': _fr.fields.List(_fr.fields.Nested(object_res_model))
+})
 works_res_model = work_ns.model('WorksRes', {
     'works': _fr.fields.List(_fr.fields.Nested(work_res_model))
 })
 @work_ns.route('', methods=['GET', 'POST', 'PUT'])
 class Work(_fr.Resource):
     @work_ns.marshal_with(works_res_model)
-    @work_ns.doc(params={'submit_id': 'Submit ID'})
+    @work_ns.doc(params={'submit_id': 'Submit ID', 'assignment_id': 'Assignment ID', 'user_id': 'User ID'})
     def get(self):
         data = request.args
         works = service.get_works(data)

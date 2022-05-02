@@ -5,7 +5,8 @@ from . import (
     course,
     submit,
     work,
-    assignment
+    assignment,
+    grading
 )
 
 api_bp = Blueprint('api', __name__)
@@ -22,3 +23,4 @@ def init_app(app, **kwargs):
     api.add_namespace(assignment.assignment_ns)
     api.add_namespace(submit.submit_ns)
     api.add_namespace(work.work_ns)
+    api.add_namespace(grading.grading_ns)

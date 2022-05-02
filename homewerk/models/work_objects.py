@@ -10,5 +10,7 @@ class WorkObject(db.Model, m.TimestampMixin):
     top = Column(Float, nullable=False)
     left = Column(Float, nullable=False)
     width_size = Column(Float, nullable=False) # width of image of work => to resize when render to fe
+    value = Column(String(255))
+    image = Column(Integer)
 
     work = db.relationship('Work', backref='objects')

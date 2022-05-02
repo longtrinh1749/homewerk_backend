@@ -16,7 +16,18 @@ work_res_schema = {
     'active': fields.Boolean,
 }
 
+object_res_schema = {
+    'work_id': fields.Integer,
+    'type': fields.String,
+    'top': fields.Float,
+    'left': fields.Float,
+    'width_size': fields.Float,
+    'value': fields.String,
+    'image': fields.Integer,
+}
+
 work_put_req_schema = {
+    'id': fields.Integer,
     'active': fields.Boolean,
     'priority': fields.Integer,
     'canvas_json': fields.String,
