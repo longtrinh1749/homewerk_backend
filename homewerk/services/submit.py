@@ -1,6 +1,7 @@
 from homewerk import models as m
 from sqlalchemy import or_
 from homewerk.services import Singleton
+from homewerk.constants import SubmitStatus
 
 class SubmitService(Singleton):
     def get_submits(self, data):
@@ -34,9 +35,14 @@ class SubmitService(Singleton):
         if status:
             submit.status = status
 
-        result = data.get('result')
+        result = data.get('score')
         if result:
             submit.result = result
+            submit.status = SubmitStatus.GRADED
+
+        comment = data.get('comment')
+        if comment:
+            submit.comment = comment
 
         m.db.session.commit()
         return submit

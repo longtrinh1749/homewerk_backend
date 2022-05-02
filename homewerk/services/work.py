@@ -19,6 +19,14 @@ class WorkService(Singleton):
         if submit_id:
             query = query.filter(m.Work.submit_id == submit_id)
 
+        user_id = data.get('user_id')
+        if user_id:
+            query = query.filter(m.Work.submit_id == m.Submit.id, m.Submit.user_id == user_id)
+
+        assignment_id = data.get('assignment_id')
+        if assignment_id:
+            query = query.filter(m.Work.submit_id == m.Submit.id, m.Submit.assignment_id == assignment_id)
+
         return query.filter(m.Work.active == True).all()
 
     def add_work(self, data):
@@ -61,8 +69,24 @@ class WorkService(Singleton):
             work.canvas_json = canvas_json
 
         objects = data.get('objects')
+        objects = [o for o in objects if o]
         if objects:
-            work.objects = objects
+            # current_objects = m.WorkObject(m.WorkObject.work_id == work.id).all()
+            # for o in current_objects:
+            #     m.db.session.delete(current_objects)
+            # m.db.session.commit()
+            work.objects = []
+            for o in objects:
+                new_object = m.WorkObject()
+                new_object.work_id = o.get('workId')
+                new_object.type = o.get('type')
+                new_object.top = o.get('top')
+                new_object.left = o.get('left')
+                new_object.value = o.get('value')
+                new_object.image = o.get('image')
+                new_object.width_size = o.get('widthSize', 0)
+                m.db.session.add(new_object)
+                m.db.session.commit()
 
         m.db.session.commit()
         return work
