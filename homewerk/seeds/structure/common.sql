@@ -43,10 +43,11 @@ CREATE TABLE `assignments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `instruction` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `course_id` (`course_id`),
   CONSTRAINT `assignments_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,10 +66,11 @@ CREATE TABLE `courses` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `class` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`),
   CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,12 +88,13 @@ CREATE TABLE `submits` (
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `assignment_id` (`assignment_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `submits_ibfk_1` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`id`),
   CONSTRAINT `submits_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,12 +110,13 @@ CREATE TABLE `user_course` (
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `course_id` (`course_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_course_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
   CONSTRAINT `user_course_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,14 +156,16 @@ CREATE TABLE `work_objects` (
   `type` varchar(20) NOT NULL,
   `top` float NOT NULL,
   `left` float NOT NULL,
-  `width_size` float NOT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `value` varchar(255) DEFAULT NULL,
+  `width_size` float NOT NULL,
+  `image` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `work_id` (`work_id`),
   CONSTRAINT `work_objects_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `works` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10148 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,10 +183,11 @@ CREATE TABLE `works` (
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `submit_id` (`submit_id`),
   CONSTRAINT `works_ibfk_1` FOREIGN KEY (`submit_id`) REFERENCES `submits` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -192,4 +199,4 @@ CREATE TABLE `works` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-25 13:19:26
+-- Dump completed on 2022-05-02 21:46:07
