@@ -62,6 +62,7 @@ class UserService(Singleton):
         course_id = data.get('course_id')
         students = m.User.query.filter(m.User.id == m.UserCourse.user_id,
                                        m.UserCourse.course_id == course_id,
+                                       m.UserCourse.active == True,
                                        m.User.role == Role.Student).all()
 
         return students

@@ -37,7 +37,7 @@ class CourseService(Singleton):
             return None
         course.clazz = data.get('class')
         course.school = data.get('school')
-        course.school_year = data.get('school_year')
+        course.school_year = data.get('year')
         course.active = data.get('active')
         m.db.session.commit()
         return course

@@ -18,7 +18,8 @@ class CourseUserService(Singleton):
         course_user = m.UserCourse.query.filter(m.UserCourse.course_id == course_id,
                                                 m.UserCourse.user_id == user_id).first()
         if course_user:
-            m.db.session.delete(course_user)
+            course_user.active = False
+            # m.db.session.delete(course_user)
             m.db.session.commit()
             return {'result': True}
 
