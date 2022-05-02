@@ -6,7 +6,8 @@ submit_res_schema = {
     'assignment_id': fields.Integer,
     'user_id': fields.Integer,
     'status': fields.String,
-    'result': fields.Integer
+    'result': fields.String,
+    'comment': fields.String,
 }
 
 submit_post_req_schema = {
