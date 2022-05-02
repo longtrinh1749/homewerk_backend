@@ -8,4 +8,5 @@ class Submit(db.Model, m.TimestampMixin): # submit include many works (image)
     assignment_id = Column(Integer, ForeignKey('assignments.id'))
     user_id = Column(Integer, ForeignKey('users.id'))
     status = Column(String(255), nullable=False) # submitted, graded
-    result = Column(Integer)
+    comment = Column(String(255))
+    result = Column(String(10))
