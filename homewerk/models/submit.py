@@ -10,3 +10,5 @@ class Submit(db.Model, m.TimestampMixin): # submit include many works (image)
     status = Column(String(255), nullable=False) # submitted, graded
     comment = Column(String(255))
     result = Column(String(10))
+
+    user = db.relationship('User', backref='submits')

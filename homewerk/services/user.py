@@ -64,5 +64,12 @@ class UserService(Singleton):
                                        m.UserCourse.course_id == course_id,
                                        m.UserCourse.active == True,
                                        m.User.role == Role.Student).all()
+        assignment_id = data.get('assignment_id')
+        for s in students:
+            if assignment_id:
+                submit = m.Submit.query.filter(m.Submit.user_id == students[0].id,
+                                               m.Submit.assignment_id == assignment_id).first()
+                if submit:
+                    s.status = submit.status
 
         return students
