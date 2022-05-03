@@ -5,7 +5,6 @@ from flask_restx import fields, marshal
 
 from homewerk.api.course.schema import (
     get_course_request_model,
-    get_course_response_model,
     get_courses_response_model,
     # get_courses_by_user_req_model,
     # add_course_user_req_model,
@@ -25,6 +24,20 @@ course_ns = _fr.Namespace(
 
 service = CourseService.get_instance()
 
+get_course_response_model = {
+    'id': fields.Integer,
+    'name': fields.String,
+    'class': fields.String(attribute='clazz'),
+    'school': fields.String,
+    'school_year': fields.String(attribute='school_year_to_str'),
+    'year': fields.String(attribute='school_year'),
+    'created_by': fields.Integer,
+    'active': fields.Boolean,
+    'teacher': fields.Nested(course_ns.model('TeacherResData', {
+        'name': fields.String,
+    }), attribute='created_user'),
+    'total': fields.Integer(attribute='total')
+}
 get_course_req_schema = course_ns.model('GetCourseRequest', get_course_request_model)
 # get_courses_by_user_req_schema = course_ns.model('GetCourseByUserRequest', get_courses_by_user_req_model)
 # get_courses_res_schema = fields.List(fields.Nested(course_ns.model('GetCoursesResponse', get_courses_response_model)))
