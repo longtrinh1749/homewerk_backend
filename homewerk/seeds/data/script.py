@@ -75,17 +75,17 @@ def gen_assignment():
     # Course 3
     englist_asm_names = ['', 'At my birthday party', 'In the backyard', 'At the seaside', 'In the countryside', 'In the classroom']
     for i in range(1, 6):
-        print(f"({i+14}, 2, '{englist_asm_names[i]}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
+        print(f"({i+14}, 3, '{englist_asm_names[i]}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
         f"'Trả lời câu {random.randint(1, 4)} trong SGK trang {random.randint(1, 100)}'),")
     # Course 4
     ethic_asm_names = ['', 'Vẻ đẹp quê hương em', 'Em yêu quê hương', 'Kính trọng thầy cô giáo', 'Yêu quý bạn bè', 'Quý trọng thời gian']
     for i in range(1, 6):
-        print(f"({i+19}, 2, '{ethic_asm_names[i]}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
+        print(f"({i+19}, 4, '{ethic_asm_names[i]}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
         f"'Trả lời câu {random.randint(1, 4)} trong SGK trang {random.randint(1, 100)}'),")
     # Course 5
     naturesocial_asm_names = ['', 'Các thế hệ trong gia đình', 'Nghề nghiệp của người lớn trong gia đình', 'Phòng tránh ngộ độc khi ở nhà', 'Giữ sạch nhà ở', 'Ôn tập chủ đề gia đình']
     for i in range(1, 6):
-        print(f"({i+24}, 2, '{naturesocial_asm_names[i]}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
+        print(f"({i+24}, 5, '{naturesocial_asm_names[i]}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
         f"'Trả lời câu {random.randint(1, 4)} trong SGK trang {random.randint(1, 100)}'),")
     pass
 
