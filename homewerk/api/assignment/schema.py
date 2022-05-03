@@ -7,6 +7,8 @@ get_assignment_res_model = {
     'active': fields.Boolean,
     'due': fields.String,
     'instruction': fields.String,
+    'submit': fields.Integer(attribute='total_submit'),
+    'graded': fields.Integer(attribute='total_graded'),
 }
 
 post_assignment_req_model = {

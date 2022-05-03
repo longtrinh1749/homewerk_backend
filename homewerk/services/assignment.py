@@ -1,5 +1,6 @@
 from homewerk.services import Singleton
 from homewerk import models as m
+from homewerk.constants import SubmitStatus
 
 class AssignmentService(Singleton):
     def get_assignments(self, data):
@@ -12,7 +13,16 @@ class AssignmentService(Singleton):
         if course_id:
             query = query.filter(m.Assignment.course_id == course_id)
 
-        return query.all()
+        assignments = query.all()
+        for a in assignments:
+            total_submit = len(m.Submit.query.filter(m.Submit.assignment_id == a.id,
+                                                 m.Submit.status == SubmitStatus.HANDED_IN).all())
+            total_graded = len(m.Submit.query.filter(m.Submit.assignment_id == a.id,
+                                                 m.Submit.status == SubmitStatus.GRADED).all())
+            a.total_submit = total_submit
+            a.total_graded = total_graded
+
+        return assignments
 
     def create_assignment(self, data):
         asm = m.Assignment()
