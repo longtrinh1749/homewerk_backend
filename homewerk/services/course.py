@@ -18,7 +18,7 @@ class CourseService(Singleton):
         courses = query.filter(m.Course.active == True).order_by(desc(m.Course.id)).all()
         for c in courses:
             students = m.UserCourse.query.filter(m.UserCourse.course_id == c.id).all()
-            c.total = len(students)
+            c.total = len(students) - 1
         return courses
 
     def create_course(self, data):
