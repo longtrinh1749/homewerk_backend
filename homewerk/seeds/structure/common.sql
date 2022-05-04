@@ -84,7 +84,7 @@ CREATE TABLE `submits` (
   `assignment_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `status` varchar(255) NOT NULL,
-  `result` int DEFAULT NULL,
+  `result` varchar(10) DEFAULT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
