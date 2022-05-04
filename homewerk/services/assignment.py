@@ -13,6 +13,8 @@ class AssignmentService(Singleton):
         if course_id:
             query = query.filter(m.Assignment.course_id == course_id)
 
+        user_id = data.get('user_id')
+
         assignments = query.all()
         for a in assignments:
             total_submit = len(m.Submit.query.filter(m.Submit.assignment_id == a.id,
@@ -21,6 +23,14 @@ class AssignmentService(Singleton):
                                                  m.Submit.status == SubmitStatus.GRADED).all())
             a.total_submit = total_submit
             a.total_graded = total_graded
+            if user_id:
+                submit = m.Submit.query.filter(m.Submit.assignment_id == a.id,
+                                               m.Submit.user_id == user_id).first()
+                if submit:
+                    a.status = submit.status
+                else:
+                    a.status = ''
+
 
         return assignments
 

@@ -17,4 +17,5 @@ class Grading(_fr.Resource):
     @grading_ns.expect(grading_post_req_parser)
     def put(self):
         data = request.form
+        service.update_submit(data)
         return 'ok'
