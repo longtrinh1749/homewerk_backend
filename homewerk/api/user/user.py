@@ -48,6 +48,13 @@ class Users(_fr.Resource):
 get_students_res_schema = user_ns.model('GetStudentsResponse', {
     'students': fields.List(fields.Nested(user_ns.model('StudentsResponseData', get_user_response_model)))
 })
+
+@user_ns.route('/account', methods=['PUT'])
+class Account(_fr.Resource):
+    def put(self):
+        data = request.json
+        return service.update_password(data)
+
 @user_ns.route('/course/students', methods=['GET'])
 class CourseStudent(_fr.Resource):
     @user_ns.marshal_with(get_students_res_schema)

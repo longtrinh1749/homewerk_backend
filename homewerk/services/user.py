@@ -43,15 +43,12 @@ class UserService(Singleton):
         if not user:
             return None
         try:
-            user.name = data.get('name')
-            user.password = data.get('password')
-            user.username = data.get('username')
-            user.clazz = data.get('class')
-            user.role = data.get('role')
-            user.address = data.get('address')
-            user.phone = data.get('phone')
-            user.school = data.get('school')
-            user.email = data.get('email')
+            if (data.get('name')): user.name = data.get('name')
+            if (data.get('class')): user.clazz = data.get('class')
+            if (data.get('address')): user.address = data.get('address')
+            if (data.get('phone')): user.phone = data.get('phone')
+            if (data.get('school')): user.school = data.get('school')
+            if (data.get('email')): user.email = data.get('email')
             m.db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             return None
@@ -67,9 +64,23 @@ class UserService(Singleton):
         assignment_id = data.get('assignment_id')
         for s in students:
             if assignment_id:
-                submit = m.Submit.query.filter(m.Submit.user_id == students[0].id,
+                submit = m.Submit.query.filter(m.Submit.user_id == s.id,
                                                m.Submit.assignment_id == assignment_id).first()
                 if submit:
                     s.status = submit.status
 
         return students
+
+    def update_password(self, data):
+        id = data.get('id')
+        user = m.User.query.get(id)
+        old_password = data.get('old_password')
+        if old_password != user.password:
+            return "Wrong password"
+        new_password = data.get('new_password')
+        if new_password:
+            user.password = new_password
+
+        m.db.session.commit()
+        return "Success"
+
