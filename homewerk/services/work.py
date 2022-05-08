@@ -45,13 +45,16 @@ class WorkService(Singleton):
 
         file = data.get('file')
         filename = data.get('filename')
-        path = save_file(file, filename)
         exist_works = m.Work.query.filter(m.Work.submit_id == submit.id).all()
         new_work = m.Work()
         new_work.submit_id = submit.id
+        path = save_file(file, filename, 0)
         new_work.image_path = path
         new_work.priority = len(exist_works) + 1
         m.db.session.add(new_work)
+        m.db.session.commit()
+        new_path = save_file(file, filename, new_work.id)
+        new_work.image_path = new_path
         m.db.session.commit()
         return new_work
 

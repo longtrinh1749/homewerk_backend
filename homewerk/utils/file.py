@@ -33,7 +33,7 @@ def save_b64_file(data: str, work_id: int):
     return path_for_frontend(file_path)
 
 def get_work_filename(work_id, result=False):
-    filename = 'file_' + work_id
+    filename = 'file_' + str(work_id)
     if result:
         filename += '_result'
     filename += '.png'
