@@ -2,6 +2,7 @@ from homewerk import models as m
 from sqlalchemy import or_
 from homewerk.services import Singleton
 from homewerk.constants import SubmitStatus
+from homewerk.utils import save_b64_file
 
 class SubmitService(Singleton):
     def get_submits(self, data):
@@ -43,6 +44,14 @@ class SubmitService(Singleton):
         comment = data.get('comment')
         if comment:
             submit.comment = comment
+
+        work_id = data.get('work_id')
+        if work_id:
+            file_data = data.get('file')
+            if file_data:
+                file_path = save_b64_file(file_data, work_id)
+                work = m.Work.query.get(work_id)
+                work.result_path = file_path
 
         m.db.session.commit()
         return submit

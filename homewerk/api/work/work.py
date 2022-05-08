@@ -23,6 +23,7 @@ work_res_model = work_ns.model('WorkRes', {
     'id': _fr.fields.Integer,
     'submit_id': _fr.fields.Integer,
     'image_path': _fr.fields.String,
+    'result_path': _fr.fields.String,
     'priority': _fr.fields.Integer,
     'canvas_json': _fr.fields.String,
     'active': _fr.fields.Boolean,

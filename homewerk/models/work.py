@@ -11,5 +11,6 @@ class Work(db.Model, m.TimestampMixin):
     # TODO: co the bo sung next, previous_image cho tinh nang nop lai bai
     canvas_json = Column(Text)
     active = Column(Boolean, nullable=False, default=True)
+    result_path = Column(Text)
 
     submit = db.relationship('Submit', backref='works')

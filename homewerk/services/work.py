@@ -68,6 +68,10 @@ class WorkService(Singleton):
         if canvas_json:
             work.canvas_json = canvas_json
 
+        objects = m.WorkObject.query.filter(m.WorkObject.work_id == id).all()
+        for o in objects:
+            m.db.session.delete(o)
+
         objects = data.get('objects')
         if objects:
             objects = [o for o in objects if o]

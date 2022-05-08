@@ -1,1 +1,1 @@
-from .file import allowed_file, save_file
+from .file import allowed_file, save_file, save_b64_file

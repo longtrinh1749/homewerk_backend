@@ -1,3 +1,5 @@
+from sqlalchemy import or_
+
 from homewerk.services import Singleton
 from homewerk import models as m
 from homewerk.constants import SubmitStatus
@@ -18,7 +20,8 @@ class AssignmentService(Singleton):
         assignments = query.all()
         for a in assignments:
             total_submit = len(m.Submit.query.filter(m.Submit.assignment_id == a.id,
-                                                 m.Submit.status == SubmitStatus.HANDED_IN).all())
+                                                 or_(m.Submit.status == SubmitStatus.HANDED_IN,
+                                                     m.Submit.status == SubmitStatus.GRADED)).all())
             total_graded = len(m.Submit.query.filter(m.Submit.assignment_id == a.id,
                                                  m.Submit.status == SubmitStatus.GRADED).all())
             a.total_submit = total_submit
