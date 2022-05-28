@@ -32,7 +32,6 @@ class Course(_fr.Resource):
 
     @course_user_ns.marshal_with(response_schema)
     @course_user_ns.expect(delete_course_user_schema)
-    @course_user_ns.expect(delete_course_user_schema)
     def delete(self):
         data = request.json
         result = service.remove_user_from_course(data)

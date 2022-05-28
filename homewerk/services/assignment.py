@@ -2,7 +2,10 @@ from sqlalchemy import or_
 
 from homewerk.services import Singleton
 from homewerk import models as m
-from homewerk.constants import SubmitStatus
+from homewerk.constants import SubmitStatus, NotificationScopes
+from homewerk.services.notification import NotificationService
+
+noti_service = NotificationService.get_instance()
 
 class AssignmentService(Singleton):
     def get_assignments(self, data):
@@ -57,7 +60,11 @@ class AssignmentService(Singleton):
 
         m.db.session.add(asm)
         m.db.session.commit()
-
+        course = m.Course.query.filter(m.Course.id == asm.course_id).first()
+        noti_service.create_assignment_notification(asm)
+        noti_service.subcribe_notification(scope=NotificationScopes.ASSIGNMENT,
+                                           scope_id=asm.id,
+                                           user_id=course.created_by)
         return asm
 
 
@@ -76,6 +83,10 @@ class AssignmentService(Singleton):
         active = data.get('active')
         if active:
             assignment.active = active
+
+        instruction = data.get('instruction')
+        if instruction:
+            assignment.instruction = instruction
 
         m.db.session.commit()
         return assignment

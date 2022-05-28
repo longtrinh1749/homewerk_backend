@@ -34,7 +34,7 @@ class TimestampMixin(object):
 
 
 db = _fs.SQLAlchemy()
-migrate = _fm.Migrate(db=db)
+migrate = _fm.Migrate(db=db, compare_type=True)
 
 def init_app(app, **kwargs):
 

@@ -1,6 +1,10 @@
 from homewerk.services import Singleton
 from homewerk import models as m
 from sqlalchemy import desc
+from homewerk.services.notification import NotificationService
+from homewerk.constants import NotificationScopes
+
+noti_service = NotificationService.get_instance()
 
 class CourseService(Singleton):
     def get_all_courses(self):
@@ -32,6 +36,9 @@ class CourseService(Singleton):
         m.db.session.flush()
         self.add_course_user(course.id, course.created_by)
         m.db.session.commit()
+        noti_service.subcribe_notification(scope=NotificationScopes.COURSE,
+                                           scope_id=course.id,
+                                           user_id=course.created_by)
         return course
 
     def update_course(self, data):

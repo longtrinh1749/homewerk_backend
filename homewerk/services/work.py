@@ -1,3 +1,5 @@
+import uuid
+
 from homewerk import models as m
 from homewerk.services import Singleton
 from sqlalchemy import or_
@@ -48,14 +50,14 @@ class WorkService(Singleton):
         exist_works = m.Work.query.filter(m.Work.submit_id == submit.id).all()
         new_work = m.Work()
         new_work.submit_id = submit.id
-        path = save_file(file, filename, 0)
+        path = save_file(file, uuid.uuid4(), 0)
         new_work.image_path = path
         new_work.priority = len(exist_works) + 1
         m.db.session.add(new_work)
         m.db.session.commit()
-        new_path = save_file(file, filename, new_work.id)
-        new_work.image_path = new_path
-        m.db.session.commit()
+        # new_path = save_file(file, filename, new_work.id)
+        # new_work.image_path = new_path
+        # m.db.session.commit()
         return new_work
 
     def put_work(self, data):

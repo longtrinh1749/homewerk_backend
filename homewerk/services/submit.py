@@ -1,8 +1,11 @@
 from homewerk import models as m
 from sqlalchemy import or_
 from homewerk.services import Singleton
-from homewerk.constants import SubmitStatus
+from homewerk.constants import SubmitStatus, NotificationScopes
 from homewerk.utils import save_b64_file
+from homewerk.services.notification import NotificationService
+
+noti_service = NotificationService.get_instance()
 
 class SubmitService(Singleton):
     def get_submits(self, data):
@@ -54,6 +57,8 @@ class SubmitService(Singleton):
                 work.result_path = file_path
 
         m.db.session.commit()
+        if result:
+            noti_service.grade_assignment_notification(submit)
         return submit
 
     def add_submit(self, data):
@@ -69,5 +74,11 @@ class SubmitService(Singleton):
         submit.assignment_id = assignment_id
         m.db.session.add(submit)
         m.db.session.commit()
+
+        noti_service.submit_assignment_notification(submit)
+        assignment = m.Assignment.query.filter(m.Assignment.id == assignment_id).first()
+        noti_service.subcribe_notification(user_id=user_id,
+                                           scope=NotificationScopes.ASSIGNMENT,
+                                           scope_id=assignment_id)
 
         return submit

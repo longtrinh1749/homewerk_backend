@@ -20,6 +20,7 @@ get_user_response_model = {
     'school': fields.String,
     'class': fields.String(attribute='clazz'),
     'status': fields.String,
+    'score': fields.String,
 }
 
 post_user_request_model = {

@@ -12,3 +12,5 @@ from .assignment import Assignment
 from .work import Work
 from .work_objects import WorkObject
 from .submit import Submit
+from .notification import Notification
+from .notification_subcriber import NotificationSubcriber

@@ -68,6 +68,7 @@ class UserService(Singleton):
                                                m.Submit.assignment_id == assignment_id).first()
                 if submit:
                     s.status = submit.status
+                    s.score = submit.result
 
         return students
 

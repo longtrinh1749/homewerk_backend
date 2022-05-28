@@ -24,4 +24,5 @@ put_assignment_req_model = {
     'name': fields.String,
     'active': fields.Boolean,
     'due': fields.DateTime,
+    'instruction': fields.String,
 }
