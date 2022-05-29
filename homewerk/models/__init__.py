@@ -14,3 +14,4 @@ from .work_objects import WorkObject
 from .submit import Submit
 from .notification import Notification
 from .notification_subcriber import NotificationSubcriber
+from .saved import Saved

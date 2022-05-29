@@ -23,3 +23,5 @@ class NotificationActions:
     CREATE_ASSIGNMENT = 'create assignment'
     UPDATE_ASSIGNMENT = 'update assignment'
     STUDENT_JOIN = 'student join'
+
+SAVED_TYPE = ['assignment', 'course', 'submit']
