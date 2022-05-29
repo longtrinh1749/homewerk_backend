@@ -13,7 +13,10 @@ saved_service = SavedService.get_instance()
 get_save_model = saved_ns.model('SaveModel', {
         'user_id': fields.Integer,
         'type': fields.String,
-        'type_id': fields.Integer
+        'type_id': fields.Integer,
+        'type_name': fields.String,
+        'path': fields.String,
+        'description': fields.String
     })
 get_saves_model = saved_ns.model('GetSaveModel', {
     'saves': fields.List(fields.Nested(get_save_model))
@@ -29,7 +32,7 @@ class Saved(_fr.Resource):
     def get(self):
         data = request.args
         saves = saved_service.get_saved(data)
-        return saves
+        return {'saves': saves}
 
     @saved_ns.marshal_with(get_save_model)
     def post(self):

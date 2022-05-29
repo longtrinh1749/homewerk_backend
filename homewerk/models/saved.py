@@ -8,3 +8,6 @@ class Saved(db.Model, TimestampMixin):
     user_id = Column(Integer, ForeignKey('users.id'))
     type = Column(String(100), nullable=False) # assignment, assignment, submit
     type_id = Column(Integer, nullable=False)
+    type_name = Column(String(255), nullable=False)
+    path = Column(String(255), nullable=False)
+    description = Column(String(255))
