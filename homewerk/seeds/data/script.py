@@ -43,6 +43,7 @@ def gen_course():
     print(f"(8, '{course_names[2]} lớp 2', 'Tiểu học Thịnh Liệt', '2021', 53, '2A4', 1),")
 
 def gen_course_user():
+    # insert into `user_course` (`user_id`, `course_id`, `active`) values
     # Course 1
     for i in range(1, 51):
         print(f"({i}, 1, 1),")
@@ -63,10 +64,11 @@ def gen_course_user():
     # Course 8
 
 def gen_assignment():
+    #insert into `assignments` (`id`, `course_id`, `name`, `due`, `active`, `instruction`) values
     # Course 1
     for i in range(1, 10):
         print(f"({i}, 1, 'Bảng cộng {i}', '2022-0{random.randint(1, 9)}-{random.randint(10, 27)} 0{random.randint(1, 9)}:00:00', 1," + 
-        f"'Làm bài {random.randint(1,5)} SGK trang {random.randint(1, 100)}theo {random.randint(1,3)} cách khác nhau'),")
+        f"'Làm bài {random.randint(1,5)} SGK trang {random.randint(1, 100)} theo {random.randint(1,3)} cách khác nhau'),")
     # Course 2
     literature_asm_names = ['', 'Tôi là học sinh lớp 2', 'Ngày hôm qua đâu rồi?', 'Niềm vui của Bi và Bống', 'Làm việc thật là vui', 'Em có xinh không?']
     for i in range(1, 6):
@@ -89,4 +91,75 @@ def gen_assignment():
         f"'Trả lời câu {random.randint(1, 4)} trong SGK trang {random.randint(1, 100)}'),")
     pass
 
-gen_assignment()
+def gen_notification():
+    #create assignment
+    # Course 1
+    for i in range(1, 10):
+        print(f"('assignment', '{{''course'': 1, ''assignment'': {i}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i}', {i}, 'Assignment'),")
+    # Course 2
+    for i in range(1, 6):
+        print(f"('assignment', '{{''course'': 2, ''assignment'': {i+9}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+9}', {i+9}, 'Assignment'),")
+    # Course 3
+    for i in range(1, 6):
+        print(f"('assignment', '{{''course'': 3, ''assignment'': {i+14}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+14}', {i+14}, 'Assignment'),")
+    # Course 4
+    for i in range(1, 6):
+        print(f"('assignment', '{{''course'': 4, ''assignment'': {i+19}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+19}', {i+19}, 'Assignment'),")
+    # Course 5
+    for i in range(1, 6):
+        print(f"('assignment', '{{''course'': 5, ''assignment'': {i+24}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+24}', {i+24}, 'Assignment'),")
+
+    # student join
+    # Course 1
+    for i in range(1, 51):
+        print(f"('course', '{{''course'': 1}}', {i}, 'Student join course', 'Student {i} join course 1', 1, 'Course'),")
+    # Course 2
+    for i in range(1, 51):
+        print(f"('course', '{{''course'': 2}}', {i}, 'Student join course', 'Student {i} join course 2', 2, 'Course'),")
+    # Course 3
+    for i in range(1, 41):
+        print(f"('course', '{{''course'': 3}}', {i}, 'Student join course', 'Student {i} join course 3', 3, 'Course'),")
+    # Course 4
+    for i in range(1, 41):
+        print(f"('course', '{{''course'': 4}}', {i}, 'Student join course', 'Student {i} join course 4', 4, 'Course'),")
+    # Course 5
+    for i in range(1, 41):
+        print(f"('course', '{{''course'': 5}}', {i}, 'Student join course', 'Student {i} join course 5', 5, 'Course'),")
+    pass
+
+def gen_notification_subcriber():
+    # Course
+    # Course 1
+    for i in range(1, 51):
+        print(f"({i}, 'course', 1, 1),")
+    # Course 2
+    for i in range(1, 51):
+        print(f"({i}, 'course', 2, 1),")
+    # Course 3
+    for i in range(1, 41):
+        print(f"({i}, 'course', 3, 1),")
+    # Course 4
+    for i in range(1, 41):
+        print(f"({i}, 'course', 4, 1),")
+    # Course 5
+    for i in range(1, 41):
+        print(f"({i}, 'course', 5, 1),")
+
+    #Assignment
+    # Course 1
+    for i in range(1, 10):
+        print(f"(51, 'assignment', {i}, 1),")
+    # Course 2
+    for i in range(1, 6):
+        print(f"(51, 'assignment', {i}, 1),")
+    # Course 3
+    for i in range(1, 6):
+        print(f"(51, 'assignment', {i}, 1),")
+    # Course 4
+    for i in range(1, 6):
+        print(f"(51, 'assignment', {i}, 1),")
+    # Course 5
+    for i in range(1, 6):
+        print(f"(51, 'assignment', {i}, 1),")
+
+gen_notification()

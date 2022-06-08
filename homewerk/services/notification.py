@@ -69,7 +69,7 @@ class NotificationService(Singleton):
     def create_assignment_notification(self, asm):
         noti = m.Notification()
         noti.scope = NotificationScopes.COURSE
-        noti.type = NotificationTypes.WORK
+        noti.type = NotificationTypes.ASSIGNMENT
         noti.path = {
             "course": asm.course_id,
         }
@@ -87,7 +87,7 @@ class NotificationService(Singleton):
     def grade_assignment_notification(self, submit):
         noti = m.Notification()
         noti.scope = NotificationScopes.STUDENT_WORK
-        noti.type = NotificationTypes.WORK
+        noti.type = NotificationTypes.ASSIGNMENT
         assignment = m.Assignment.query.filter(m.Assignment.id == submit.assignment_id).first()
         noti.path = {
             "course": assignment.course_id,
@@ -108,7 +108,7 @@ class NotificationService(Singleton):
         noti = m.Notification()
 
         noti.scope = NotificationScopes.ASSIGNMENT
-        noti.type = NotificationTypes.WORK
+        noti.type = NotificationTypes.ASSIGNMENT
         noti.action = NotificationActions.UPDATE_ASSIGNMENT
         assignment = m.Assignment.query.filter(m.Assignment.id == submit.assignment.id).first()
         noti.path = {
@@ -130,7 +130,7 @@ class NotificationService(Singleton):
     def student_join_notification(self, course_user):
         noti = m.Notification()
         noti.scope = NotificationScopes.COURSE
-        noti.type = NotificationTypes.WORK
+        noti.type = NotificationTypes.COURSE
         noti.action = NotificationActions.STUDENT_JOIN
         noti.path = {
             "course": course_user.course_id

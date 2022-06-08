@@ -68,6 +68,14 @@ class SavedService(Singleton):
         if user_id:
             query = query.filter(m.Saved.user_id == user_id)
 
+        type = data.get('type')
+        if type:
+            query = query.filter(m.Saved.type == type)
+
+        type_id = data.get('type_id')
+        if type_id:
+            query = query.filter(m.Saved.type_id == type_id)
+
         saved = query.all()
         return saved
 

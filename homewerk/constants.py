@@ -18,6 +18,8 @@ class NotificationScopes:
 class NotificationTypes:
     CHAT = 'chat'
     WORK = 'work'
+    COURSE = 'Course'
+    ASSIGNMENT = 'Assignment'
 
 class NotificationActions:
     CREATE_ASSIGNMENT = 'create assignment'

@@ -11,5 +11,7 @@ class Assignment(db.Model, m.TimestampMixin):
     course_id = Column(Integer, ForeignKey('courses.id'))
     active = Column(Boolean, default=True)
     instruction = Column(String(500))
+    max_score = Column(Integer, default=10)
+    score_type = Column(String(50), default='number')
 
     course = db.relationship('Course', backref='assignments')
