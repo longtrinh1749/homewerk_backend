@@ -162,4 +162,78 @@ def gen_notification_subcriber():
     for i in range(1, 6):
         print(f"(51, 'assignment', {i}, 1),")
 
+def gen_submit():
+    id = 0
+    for i in range(1, 51):
+        id = id + 1
+        print(f"(1, {i}, 'graded', {random.randint(5, 9)}, {id}, 'Cần nhiều cố gắng hơn'),")
+
+    for i in range(1, 51):
+        id = id + 1
+        print(f"(2, {i}, 'graded', {random.randint(5, 9)}, {id}, 'Cần nhiều cố gắng hơn'),")
+
+    for i in range(1, 51):
+        id = id + 1
+        print(f"(10, {i}, 'graded', {random.randint(5, 9)}, {id}, 'Cần nhiều cố gắng hơn'),")
+
+    for i in range(1, 51):
+        id = id + 1
+        print(f"(11, {i}, 'graded', {random.randint(5, 9)}, {id}, 'Cần nhiều cố gắng hơn'),")
+
+def gen_work():
+    id = 0
+    for i in range(1, 51):
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/89c61a72-68b1-4abb-82b1-616a399eaff1', 1, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/ab2ceaf2-86c5-4ca5-8304-b1e440fa9f59'")
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/b7d1539a-f996-4f91-b1e0-1afe11924ce1', 2, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/0c051e68-0f40-491d-bb52-538dc5c670fd'")
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/a22e6ac4-6747-49cb-86b4-63dbec9b8ef3', 3, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/9c1b68c5-dc98-469b-8195-0edad4324352'")
+
+
+    for i in range(51, 101):
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2c5f2d33-dbce-4560-90b1-8db5cfa72b75', 1, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/5b9b3e32-bf8d-4e33-af20-fdf8ff65919a'")
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c', 2, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c'")
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c', 3, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c'")
+
+
+    for i in range(101, 151):
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2c5f2d33-dbce-4560-90b1-8db5cfa72b75', 1, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/5b9b3e32-bf8d-4e33-af20-fdf8ff65919a'")
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c', 2, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c'")
+
+
+    for i in range(151, 201):
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2c5f2d33-dbce-4560-90b1-8db5cfa72b75', 1, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/5b9b3e32-bf8d-4e33-af20-fdf8ff65919a'")
+        id = id + 1
+        print(f"({i}, 'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c', 2, "
+              f"'{{\"version\":\"5.2.1\",\"objects\":[]}}, {id}, "
+              f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c'")
+
+
+
+
 gen_notification()
