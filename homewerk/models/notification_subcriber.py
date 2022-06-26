@@ -10,3 +10,4 @@ class NotificationSubcriber(db.Model, TimestampMixin):
     scope = Column(String(100), nullable=False)
     scope_id = Column(Integer, nullable=False)
     active = Column(Boolean, default=True)
+    read = Column(Boolean, default=True)

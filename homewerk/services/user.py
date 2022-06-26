@@ -1,4 +1,6 @@
 import sqlalchemy.exc
+from flask import g
+from flask_restx import abort
 
 from homewerk.constants import Role
 from homewerk.services import Singleton
@@ -10,8 +12,8 @@ class UserService(Singleton):
         query = m.User.query
         if not data:
             return None
-        if data.get('id'):
-            query = query.filter(m.User.id == data.get('id'))
+        if g.user.id:
+            query = query.filter(m.User.id == g.user.id)
         if data.get('username'):
             query = query.filter(m.User.username == data.get('username'))
         if data.get('password'):
@@ -20,6 +22,8 @@ class UserService(Singleton):
 
     def create_user(self, data):
         try:
+            if not (data.get('username') and data.get('password')):
+                abort(400)
             user = m.User()
             user.name = data.get('name')
             user.password = data.get('password')
@@ -30,6 +34,7 @@ class UserService(Singleton):
             user.phone = data.get('phone')
             user.school = data.get('school')
             user.email = data.get('email')
+            user.hash_password(data.get('password'))
             m.db.session.add(user)
             m.db.session.commit()
         except sqlalchemy.exc.IntegrityError:
@@ -38,7 +43,7 @@ class UserService(Singleton):
         return user
 
     def update_user(self, data):
-        user_id = data.get('id')
+        user_id = g.user.id
         user = m.User.query.get(user_id)
         if not user:
             return None
@@ -73,7 +78,7 @@ class UserService(Singleton):
         return students
 
     def update_password(self, data):
-        id = data.get('id')
+        id = g.user.id
         user = m.User.query.get(id)
         old_password = data.get('old_password')
         if old_password != user.password:
@@ -81,6 +86,7 @@ class UserService(Singleton):
         new_password = data.get('new_password')
         if new_password:
             user.password = new_password
+            user.hash_password(new_password)
 
         m.db.session.commit()
         return "Success"

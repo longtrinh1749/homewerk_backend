@@ -1,4 +1,5 @@
 import sqlalchemy.exc
+from flask import g
 
 from homewerk.constants import Role, NotificationScopes, NotificationTypes, NotificationActions
 from homewerk.services import Singleton
@@ -17,8 +18,10 @@ class NotificationService(Singleton):
             query = query.filter(m.Notification.scope == data.get('scope'))
         if data.get('path'):
             query = query.filter(m.Notification.path == data.get('path'))
-        if data.get('user_id'):
-            user_id = data.get('user_id')
+        # if data.get('user_id'):
+        #     user_id = data.get('user_id')
+        if g.user.id:
+            user_id = g.user.id
             query = query.filter(m.Notification.scope == m.NotificationSubcriber.scope,
                                  m.Notification.scope_id == m.NotificationSubcriber.scope_id,
                                  m.NotificationSubcriber.user_id == user_id,
@@ -28,6 +31,11 @@ class NotificationService(Singleton):
             token = data.get('token')
             subcribe_notification(token, notifications_for_user)
         return query.all()
+
+    def update_notification(self, data):
+        notification = m.Notification.query.get(data['id'])
+        notification.read = data['read']
+        return notification
 
     # def get_course_notifications(self, user_id):
     #     user = m.User.query.filter(m.User.id == user_id).first()

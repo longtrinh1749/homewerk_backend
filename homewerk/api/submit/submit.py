@@ -7,6 +7,7 @@ from .schema import (
     submit_put_req_schema,
     submit_post_req_parser
 )
+from homewerk.extensions.httpauth import token_auth
 
 submit_ns = _fr.Namespace(
     name="Submiting Assignment API",
@@ -25,6 +26,7 @@ submit_put_req_model = submit_ns.model('SubmitPutReqModel', submit_put_req_schem
 class Submit(_fr.Resource):
     @submit_ns.marshal_with(submits_res_model)
     @submit_ns.doc(params={'id': 'ID', 'user_id': 'User ID', 'assignment_id': 'Assignment ID'})
+    @token_auth.login_required
     def get(self):
         data = request.args
         submits = service.get_submits(data)
@@ -33,6 +35,7 @@ class Submit(_fr.Resource):
     # Post many works, cannot done yet
     @submit_ns.marshal_with(submit_res_model)
     @submit_ns.expect(submit_post_req_parser)
+    @token_auth.login_required
     def post(self):
         # data = request.json
         # submit = service.add_submit(data)
@@ -43,6 +46,7 @@ class Submit(_fr.Resource):
 
     @submit_ns.marshal_with(submit_res_model)
     @submit_ns.expect(submit_post_req_model)
+    @token_auth.login_required(role='ROLE.TEACHER')
     def put(self):
         data = request.json
         submit = service.update_submit(data)

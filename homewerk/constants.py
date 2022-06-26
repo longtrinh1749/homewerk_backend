@@ -1,6 +1,6 @@
 from enum import Enum
 
-
+JWT_EXPIRED_HOURS = 10
 class Role:
     Teacher = 'ROLE.TEACHER'
     Student = 'ROLE.STUDENT'

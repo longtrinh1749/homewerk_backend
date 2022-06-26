@@ -1,7 +1,7 @@
 import os
 
 import flask_restx as _fr
-from flask import request
+from flask import request, send_file
 from werkzeug.utils import secure_filename
 
 from homewerk.services import WorkService
@@ -10,6 +10,7 @@ from .schema import work_put_req_schema
 from .schema import work_res_schema
 from .schema import object_res_schema
 from homewerk.utils import allowed_file, save_file
+from homewerk.extensions.httpauth import token_auth
 
 work_ns = _fr.Namespace(
     name='Work as individual image',
@@ -36,6 +37,7 @@ works_res_model = work_ns.model('WorksRes', {
 class Work(_fr.Resource):
     @work_ns.marshal_with(works_res_model)
     @work_ns.doc(params={'submit_id': 'Submit ID', 'assignment_id': 'Assignment ID', 'user_id': 'User ID'})
+    @token_auth.login_required
     def get(self):
         data = request.args
         works = service.get_works(data)
@@ -44,6 +46,7 @@ class Work(_fr.Resource):
     # Chi post 1 work (current solution)
     @work_ns.marshal_with(work_res_model)
     @work_ns.expect(work_post_req_parser)
+    @token_auth.login_required
     def post(self):
         if 'file' not in request.files:
             return 'not ok'
@@ -62,8 +65,9 @@ class Work(_fr.Resource):
             work = service.add_work(data)
         return work
 
-    @work_ns.marshal_with(work_res_model)
+    # @work_ns.marshal_with(work_res_model)
     @work_ns.expect(work_put_req_model)
+    @token_auth.login_required
     def put(self):
         data = request.json
         work = service.put_work(data)

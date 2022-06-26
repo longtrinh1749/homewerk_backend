@@ -10,6 +10,7 @@ from homewerk.api.assignment.schema import (
 )
 
 from homewerk.services import AssignmentService
+from homewerk.extensions.httpauth import token_auth
 
 assignment_ns = _fr.Namespace(
     name='Assignments',
@@ -29,6 +30,7 @@ put_assignment_req_schema = assignment_ns.model('PutAsmReq', put_assignment_req_
 class Assignment(_fr.Resource):
     @assignment_ns.marshal_with(get_assignments_res_schema)
     @assignment_ns.doc(params={'id': 'ID', 'course_id': 'Course ID'})
+    @token_auth.login_required
     def get(self):
         data = request.args
         assignments = service.get_assignments(data)
@@ -36,6 +38,7 @@ class Assignment(_fr.Resource):
 
     @assignment_ns.marshal_with(get_assignment_res_schema)
     @assignment_ns.expect(post_assignment_req_schema)
+    @token_auth.login_required(role='ROLE.TEACHER')
     def post(self):
         data = request.json
         assignment = service.create_assignment(data)
@@ -43,6 +46,7 @@ class Assignment(_fr.Resource):
 
     @assignment_ns.marshal_with(get_assignment_res_schema)
     @assignment_ns.expect(put_assignment_req_schema)
+    @token_auth.login_required(role='ROLE.TEACHER')
     def put(self):
         data = request.json
         assignment = service.update_assignment(data)

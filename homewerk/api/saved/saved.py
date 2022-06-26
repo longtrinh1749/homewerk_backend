@@ -2,6 +2,7 @@ from homewerk.services.saved import SavedService
 import flask_restx as _fr
 from flask_restx import fields
 from flask import request
+from homewerk.extensions.httpauth import token_auth
 
 saved_ns = _fr.Namespace(
     name='Saved',
@@ -29,18 +30,21 @@ class Saved(_fr.Resource):
 
     @saved_ns.doc({'user_id': 'User ID'})
     @saved_ns.marshal_with(get_saves_model)
+    @token_auth.login_required
     def get(self):
         data = request.args
         saves = saved_service.get_saved(data)
         return {'saves': saves}
 
     @saved_ns.marshal_with(get_save_model)
+    @token_auth.login_required
     def post(self):
         data = request.json
         saved = saved_service.create_saved(data)
         return saved
 
     @saved_ns.marshal_with(delete_result_model)
+    @token_auth.login_required
     def delete(self):
         data = request.json
         result = saved_service.delete_saved(data)

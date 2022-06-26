@@ -13,9 +13,13 @@ from homewerk.api.course.schema import (
     create_course_request_model,
     get_courses_res_model
 )
+from homewerk.extensions.httpauth import token_auth
 
 from homewerk.services.course import CourseService
-from flask import request
+from flask import request, abort
+
+from homewerk.extensions.httpauth import token_auth
+from flask import g
 
 course_ns = _fr.Namespace(
     name='Courses',
@@ -54,13 +58,16 @@ get_courses_res_schema = course_ns.model('GetCoursesResponse', {
 class Courses(_fr.Resource):
     @course_ns.marshal_with(get_courses_res_schema)
     @course_ns.doc(params={'id': 'Course ID', 'user_id': 'User ID'})
+    @token_auth.login_required(role='ROLE.TEACHER')
     def get(self):
         data = request.args
         courses = service.get_courses(data)
+        # abort(400)
         return {'courses': courses}
 
     @course_ns.marshal_with(get_course_res_schema)
     @course_ns.expect(create_course_req_schema)
+    @token_auth.login_required(role='ROLE.TEACHER')
     def post(self):
         data = request.json
         course = service.create_course(data)
@@ -68,6 +75,7 @@ class Courses(_fr.Resource):
 
     @course_ns.marshal_with(get_course_res_schema)
     @course_ns.expect(update_course_req_schema)
+    @token_auth.login_required(role='ROLE.TEACHER')
     def put(self):
         data = request.json
         course = service.update_course(data)

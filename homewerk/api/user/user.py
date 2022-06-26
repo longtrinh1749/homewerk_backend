@@ -1,3 +1,5 @@
+import datetime
+
 import flask
 import flask_restx as _fr
 from flask_restx import api, fields
@@ -7,9 +9,13 @@ from homewerk.api.user.schema import (
     post_user_request_model,
     put_user_request_model
 )
+from homewerk.constants import JWT_EXPIRED_HOURS
 
 from homewerk.services.user import UserService
-from flask import request
+from flask import request, jsonify
+from flask import g
+
+from homewerk.extensions.httpauth import basic_auth, token_auth
 
 user_ns = _fr.Namespace(
     name='User',
@@ -28,6 +34,7 @@ class Users(_fr.Resource):
     # @user_ns.expect(get_user_request_schema, location="query")
     @user_ns.marshal_with(get_user_response_schema)
     @user_ns.doc(params={'id': 'User ID', 'username': 'Username', 'password': 'Password'})
+    @token_auth.login_required
     def get(self):
         data = request.args
         user = service.get_user(data)
@@ -41,6 +48,7 @@ class Users(_fr.Resource):
 
     @user_ns.expect(put_user_request_schema)
     @user_ns.marshal_with(get_user_response_schema)
+    @token_auth.login_required
     def put(self):
         data = request.json
         return service.update_user(data)
@@ -51,6 +59,7 @@ get_students_res_schema = user_ns.model('GetStudentsResponse', {
 
 @user_ns.route('/account', methods=['PUT'])
 class Account(_fr.Resource):
+    @token_auth.login_required
     def put(self):
         data = request.json
         return service.update_password(data)
@@ -59,7 +68,32 @@ class Account(_fr.Resource):
 class CourseStudent(_fr.Resource):
     @user_ns.marshal_with(get_students_res_schema)
     @user_ns.doc(params={'course_id': 'Course ID'})
+    @token_auth.login_required(role='ROLE.TEACHER')
     def get(self):
         data = request.args
         students = service.get_students_by_course(data)
         return {'students': students}
+
+@user_ns.route('/token', methods=['GET', 'POST'])
+class Token(_fr.Resource):
+    @basic_auth.login_required
+    def get(self):
+        token = g.user.generate_auth_token()
+        return jsonify({'token': token,
+                        'expired_in': JWT_EXPIRED_HOURS,
+                        'role': g.user.role})
+
+    @token_auth.login_required
+    def post(self):
+        token = g.user.generate_auth_token()
+        return jsonify({'token': token,
+                        'expired_in': 7,
+                        'role': g.user.role})
+
+    @token_auth.login_required
+    def put(self):
+        token = g.user.generate_auth_token()
+        return jsonify({'token': token,
+                        'expired_in': 7,
+                        'role': g.user.role})
+

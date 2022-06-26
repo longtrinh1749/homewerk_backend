@@ -6,6 +6,7 @@ from homewerk.api.course.schema import (
     remove_course_user_req_model,
     course_user_res_model
 )
+from homewerk.extensions.httpauth import token_auth
 
 from homewerk.services.course_user import CourseUserService
 from flask import request
@@ -25,6 +26,7 @@ response_schema = course_user_ns.model('Res', course_user_res_model)
 class Course(_fr.Resource):
     @course_user_ns.marshal_with(response_schema)
     @course_user_ns.expect(post_course_user_schema)
+    @token_auth.login_required
     def post(self):
         data = request.json
         result = service.add_user_to_course(data)
@@ -32,6 +34,7 @@ class Course(_fr.Resource):
 
     @course_user_ns.marshal_with(response_schema)
     @course_user_ns.expect(delete_course_user_schema)
+    @token_auth.login_required
     def delete(self):
         data = request.json
         result = service.remove_user_from_course(data)

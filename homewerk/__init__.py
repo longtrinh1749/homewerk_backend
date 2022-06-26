@@ -1,8 +1,10 @@
 import flask
 import os
 from . import api, models, services
+from homewerk.extensions import httpauth
 import config
 from flask_cors import CORS
+
 
 def create_app():
 
@@ -16,6 +18,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['CORS_SUPPORTS_CREDENTIALS'] = True
     app.config['CORS_HEADERS'] = 'Content-Type'
+    app.config['CORS_EXPOSE_HEADERS'] = 'Content-Disposition'
     app.config['UPLOAD_FOLDER'] = config.ROOT_DIR + '/data'
 
     models.init_app(app)

@@ -3,6 +3,7 @@ from homewerk import models as m
 from sqlalchemy import desc
 from homewerk.services.notification import NotificationService
 from homewerk.constants import NotificationScopes
+from flask import g
 
 noti_service = NotificationService.get_instance()
 
@@ -16,9 +17,9 @@ class CourseService(Singleton):
             return self.get_all_courses()
         if data.get('id'):
             query = query.filter(m.Course.id == data.get('id'))
-        if data.get('user_id'):
+        if g.user.id:
             query = query.filter(m.UserCourse.course_id == m.Course.id)
-            query = query.filter(m.UserCourse.user_id == data.get('user_id'))
+            query = query.filter(m.UserCourse.user_id == g.user.id)
         courses = query.filter(m.Course.active == True).order_by(desc(m.Course.id)).all()
         for c in courses:
             students = m.UserCourse.query.filter(m.UserCourse.course_id == c.id).all()

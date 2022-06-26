@@ -1,17 +1,21 @@
 import copy
 
+from flask import g
+
 from homewerk.services import Singleton
 from homewerk import models as m
 from homewerk.constants import Role
 
 class ScoreService(Singleton):
     def get_top_course_scores(self, student_id):
+        student_id = g.user.id
         courses = m.Course.query.filter(m.Course.id == m.UserCourse.course_id,
                                         m.UserCourse.user_id == student_id).all()
         for c in courses:
             assignments = m.Assignment.query.filter(m.Assignment.course_id == c.id).all()
             assignment_ids = [a.id for a in assignments]
-            submits = m.Submit.query.filter(m.Submit.assignment_id.in_(assignment_ids)).all()
+            submits = m.Submit.query.filter(m.Submit.assignment_id.in_(assignment_ids),
+                                            m.Submit.user_id == student_id).all()
             total_score = 0
             for s in submits:
                 try:
@@ -22,6 +26,7 @@ class ScoreService(Singleton):
             c.avg_score = total_score / len(assignment_ids)
 
         courses.sort(key=lambda c: c.avg_score)
+        courses.reverse()
 
         return courses
 
@@ -49,12 +54,13 @@ class ScoreService(Singleton):
                                             m.Submit.user_id == student.id).all()
             total_score = 0
             for s in submits:
+                asm = m.Assignment.query.get(s.assignment_id)
                 try:
                     r = float(s.result) or 0
                 except Exception:
                     r = 0
-                total_score = total_score + r
-            student.avg_score = total_score / len(assignment_ids)
+                total_score = total_score + r/asm.max_score
+            student.avg_score = total_score / len(assignment_ids) * 10
 
             if display:
                 new_assignments = copy.deepcopy(assignments)
@@ -69,5 +75,6 @@ class ScoreService(Singleton):
 
         if not display:
             students.sort(key=lambda s: s.avg_score)
+            students.reverse()
 
         return students
