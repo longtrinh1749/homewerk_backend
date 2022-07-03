@@ -29,4 +29,8 @@ def create_app():
 
 app = create_app()
 
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    models.db.session.remove()
+
 from . import biz
