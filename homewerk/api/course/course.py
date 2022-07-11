@@ -58,7 +58,7 @@ get_courses_res_schema = course_ns.model('GetCoursesResponse', {
 class Courses(_fr.Resource):
     @course_ns.marshal_with(get_courses_res_schema)
     @course_ns.doc(params={'id': 'Course ID', 'user_id': 'User ID'})
-    @token_auth.login_required(role='ROLE.TEACHER')
+    @token_auth.login_required
     def get(self):
         data = request.args
         courses = service.get_courses(data)

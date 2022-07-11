@@ -12,7 +12,9 @@ class UserService(Singleton):
         query = m.User.query
         if not data:
             return None
-        if g.user.id:
+        if data.get('id'):
+            query = query.filter(m.User.id == data.get('id'))
+        else:
             query = query.filter(m.User.id == g.user.id)
         if data.get('username'):
             query = query.filter(m.User.username == data.get('username'))

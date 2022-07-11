@@ -32,6 +32,10 @@ class NotificationService(Singleton):
             subcribe_notification(token, notifications_for_user)
         return query.all()
 
+    def group_notifications(self, notifications):
+        notifications = []
+
+
     def update_notification(self, data):
         notification = m.Notification.query.get(data['id'])
         notification.read = data['read']
