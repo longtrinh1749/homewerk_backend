@@ -1,4 +1,5 @@
 import random
+from homewerk import models
 
 def gen_user():
     last_names = ['Trịnh', 'Nguyễn', 'Vũ', 'Trần', 'Lưu', 'Lê']
@@ -95,36 +96,57 @@ def gen_notification():
     #create assignment
     # Course 1
     for i in range(1, 10):
-        print(f"('assignment', '{{''course'': 1, ''assignment'': {i}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i}', {i}, 'Assignment'),")
+        teacher = models.User.query.get(51)
+        assignment = models.Assignment.query.filter(models.Assignment.id == i).first()
+        course = models.Course.query.get(1)
+        print(f"('assignment', '{{''course'': 1, ''assignment'': {i}}}', 51, 'Assignment created', 'Teacher {teacher.name} created assignment {assignment.name} in {course.name}', {i}, 'Assignment'),")
     # Course 2
     for i in range(1, 6):
-        print(f"('assignment', '{{''course'': 2, ''assignment'': {i+9}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+9}', {i+9}, 'Assignment'),")
+        assignment = models.Assignment.query.filter(models.Assignment.id == i+9).first()
+        course = models.Course.query.get(2)
+        print(f"('assignment', '{{''course'': 2, ''assignment'': {i+9}}}', 51, 'Assignment created', 'Teacher {teacher.name} created assignment {assignment.name} in {course.name}', {i+9}, 'Assignment'),")
     # Course 3
     for i in range(1, 6):
-        print(f"('assignment', '{{''course'': 3, ''assignment'': {i+14}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+14}', {i+14}, 'Assignment'),")
+        assignment = models.Assignment.query.filter(models.Assignment.id == i+14).first()
+        course = models.Course.query.get(3)
+        print(f"('assignment', '{{''course'': 3, ''assignment'': {i+14}}}', 51, 'Assignment created', 'Teacher {teacher.name} created assignment {assignment.name} in {course.name}', {i+14}, 'Assignment'),")
     # Course 4
     for i in range(1, 6):
-        print(f"('assignment', '{{''course'': 4, ''assignment'': {i+19}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+19}', {i+19}, 'Assignment'),")
+        assignment = models.Assignment.query.filter(models.Assignment.id == i+19).first()
+        course = models.Course.query.get(4)
+        print(f"('assignment', '{{''course'': 4, ''assignment'': {i+19}}}', 51, 'Assignment created', 'Teacher {teacher.name} created assignment {assignment.name} in {course.name}', {i+19}, 'Assignment'),")
     # Course 5
     for i in range(1, 6):
-        print(f"('assignment', '{{''course'': 5, ''assignment'': {i+24}}}', 51, 'Assignment created', 'Teacher 51 create assignment {i+24}', {i+24}, 'Assignment'),")
+        assignment = models.Assignment.query.filter(models.Assignment.id == i+24).first()
+        course = models.Course.query.get(5)
+        print(f"('assignment', '{{''course'': 5, ''assignment'': {i+24}}}', 51, 'Assignment created', 'Teacher {teacher.name} created assignment {assignment.name} in {course.name}', {i+24}, 'Assignment'),")
 
     # student join
     # Course 1
     for i in range(1, 51):
-        print(f"('course', '{{''course'': 1}}', {i}, 'Student join course', 'Student {i} join course 1', 1, 'Course'),")
+        student = models.User.query.get(i)
+        course = models.Course.query.get(1)
+        print(f"('course', '{{''course'': 1}}', {i}, 'Student join course', '{student.name} join {course.name}', 1, 'Course'),")
     # Course 2
     for i in range(1, 51):
-        print(f"('course', '{{''course'': 2}}', {i}, 'Student join course', 'Student {i} join course 2', 2, 'Course'),")
+        student = models.User.query.get(i)
+        course = models.Course.query.get(2)
+        print(f"('course', '{{''course'': 2}}', {i}, 'Student join course', '{student.name} join {course.name}', 2, 'Course'),")
     # Course 3
     for i in range(1, 41):
-        print(f"('course', '{{''course'': 3}}', {i}, 'Student join course', 'Student {i} join course 3', 3, 'Course'),")
+        student = models.User.query.get(i)
+        course = models.Course.query.get(3)
+        print(f"('course', '{{''course'': 3}}', {i}, 'Student join course', '{student.name} join {course.name}', 3, 'Course'),")
     # Course 4
     for i in range(1, 41):
-        print(f"('course', '{{''course'': 4}}', {i}, 'Student join course', 'Student {i} join course 4', 4, 'Course'),")
+        student = models.User.query.get(i)
+        course = models.Course.query.get(4)
+        print(f"('course', '{{''course'': 4}}', {i}, 'Student join course', '{student.name} join {course.name}', 4, 'Course'),")
     # Course 5
     for i in range(1, 41):
-        print(f"('course', '{{''course'': 5}}', {i}, 'Student join course', 'Student {i} join course 5', 5, 'Course'),")
+        student = models.User.query.get(i)
+        course = models.Course.query.get(5)
+        print(f"('course', '{{''course'': 5}}', {i}, 'Student join course', '{student.name} join {course.name}', 5, 'Course'),")
     pass
 
 def gen_notification_subcriber():
@@ -233,4 +255,4 @@ def gen_work():
               f"'{{\"version\":\"5.2.1\",\"objects\":[]}}', {id}, 1,"
               f"'https://storage.googleapis.com/hoemwerk-bucket/image/submit/2cac118a-5090-4772-9a19-f0c4aa8d9a5c'),")
 
-gen_work()
+gen_notification()

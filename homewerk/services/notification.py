@@ -1,5 +1,6 @@
 import sqlalchemy.exc
 from flask import g
+from sqlalchemy import desc, asc
 
 from homewerk.constants import Role, NotificationScopes, NotificationTypes, NotificationActions
 from homewerk.services import Singleton
@@ -30,10 +31,30 @@ class NotificationService(Singleton):
             notifications_for_user = query.all()
             token = data.get('token')
             subcribe_notification(token, notifications_for_user)
-        return query.all()
+        return self.group_notifications(query.order_by(desc(m.Notification.updated_at)).all())
 
     def group_notifications(self, notifications):
-        notifications = []
+        ret = []
+        ret.append(notifications[0])
+        lead_notification = notifications[0]
+        count = 0
+        for i in range(1, len(notifications)-1):
+            curr_notification = notifications[i]
+            if curr_notification.type != 'Course':
+                ret.append(curr_notification)
+                continue
+            if curr_notification.type != lead_notification.type or curr_notification.scope_id != lead_notification.scope_id:
+                if count != 0:
+                    new_description = lead_notification.description.split(' join ')
+                    new_description.insert(1, f'and {count} others join')
+                    lead_notification.description = (' ').join(new_description)
+                lead_notification = curr_notification
+                ret.append(curr_notification)
+                count = 0
+                continue
+            count += 1
+
+        return ret
 
 
     def update_notification(self, data):

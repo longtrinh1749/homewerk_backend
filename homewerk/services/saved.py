@@ -1,3 +1,5 @@
+from flask import g
+
 from homewerk.models import db
 from homewerk import models as m
 from homewerk.services.base import Singleton
@@ -7,6 +9,7 @@ class SavedService(Singleton):
     def create_saved(self, data):
         saved = m.Saved()
         user_id = data.get('user_id')
+        user_id = g.user.id
         if user_id:
             saved.user_id = user_id
 
@@ -65,6 +68,7 @@ class SavedService(Singleton):
     def get_saved(self, data):
         query = m.Saved.query
         user_id = data.get('user_id')
+        user_id = g.user.id
         if user_id:
             query = query.filter(m.Saved.user_id == user_id)
 
@@ -81,6 +85,7 @@ class SavedService(Singleton):
 
     def delete_saved(self, data):
         user_id = data.get('user_id')
+        user_id = g.user.id
         type = data.get('type')
         type_id = data.get('type_id')
         all_saved = m.Saved.query.filter().all()
