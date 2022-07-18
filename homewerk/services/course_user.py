@@ -1,3 +1,5 @@
+from flask import g
+
 from homewerk.services import Singleton
 from homewerk import models as m
 from homewerk.constants import Role, NotificationScopes
@@ -9,7 +11,9 @@ class CourseUserService(Singleton):
     def add_user_to_course(self, data):
         course_user = m.UserCourse()
         course_user.course_id = data.get('course_id')
-        course_user.user_id = data.get('user_id')
+        user_id = data.get('user_id')
+        user_id = g.user.id
+        course_user.user_id = user_id
 
         m.db.session.add(course_user)
         m.db.session.commit()
