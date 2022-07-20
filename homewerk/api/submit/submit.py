@@ -46,7 +46,7 @@ class Submit(_fr.Resource):
 
     @submit_ns.marshal_with(submit_res_model)
     @submit_ns.expect(submit_post_req_model)
-    @token_auth.login_required(role='ROLE.TEACHER')
+    @token_auth.login_required
     def put(self):
         data = request.json
         submit = service.update_submit(data)

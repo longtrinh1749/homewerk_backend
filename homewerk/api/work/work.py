@@ -1,7 +1,7 @@
 import os
 
 import flask_restx as _fr
-from flask import request, send_file
+from flask import request, send_file, g
 from werkzeug.utils import secure_filename
 
 from homewerk.services import WorkService
@@ -56,16 +56,18 @@ class Work(_fr.Resource):
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             # path = save_file(file, filename)
+            user_id = request.form.get('user_id')
+            user_id = g.user.id
             data = {
                 'file': file,
                 'filename': filename,
                 'assignment_id': request.form.get('assignment_id'),
-                'user_id': request.form.get('user_id'),
+                'user_id': user_id,
             }
             work = service.add_work(data)
         return work
 
-    # @work_ns.marshal_with(work_res_model)
+    @work_ns.marshal_with(work_res_model)
     @work_ns.expect(work_put_req_model)
     @token_auth.login_required
     def put(self):

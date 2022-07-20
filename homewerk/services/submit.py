@@ -1,3 +1,5 @@
+from flask import g
+
 from homewerk import models as m
 from sqlalchemy import or_
 from homewerk.services import Singleton
@@ -20,6 +22,7 @@ class SubmitService(Singleton):
             query = query.filter(m.Submit.assignment_id == assignment_id)
 
         user_id = data.get('user_id')
+        user_id = g.user.id
         if user_id:
             query = query.filter(m.Submit.user_id == user_id)
 

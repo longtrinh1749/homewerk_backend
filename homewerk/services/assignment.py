@@ -1,3 +1,4 @@
+from flask import g
 from sqlalchemy import or_
 
 from homewerk.services import Singleton
@@ -19,6 +20,7 @@ class AssignmentService(Singleton):
             query = query.filter(m.Assignment.course_id == course_id)
 
         user_id = data.get('user_id')
+        user_id = g.user.id
 
         assignments = query.all()
         for a in assignments:
