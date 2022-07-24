@@ -61,6 +61,13 @@ class WorkService(Singleton):
         return new_work
 
     def put_work(self, data):
+        submit_id = data.get('submit_id')
+        result = data.get('result')
+        comment = data.get('comment')
+        submit = m.Submit.query.get(submit_id)
+        submit.result = result
+        submit.comment = comment
+        m.db.session.commit()
         id = data.get('id')
         if not id:
             return

@@ -68,3 +68,16 @@ def upload_gcloud_file(file=None, data=None, result=False):
         blob.upload_from_string(data, content_type='image/png')
     # blob.make_public()
     return blob.public_url
+
+def  upload_gcloud_doc(name, file=None, data=None):
+    load_dotenv()
+    storage_client = storage.Client().from_service_account_json(GCLOUD_KEY_PATH)
+    bucket = storage_client.get_bucket(GCLOUD_BUCKET)
+    name = name.replace(' ', '_')
+    blob = bucket.blob('%s/%s/%s' % ('doc', 'assigment', name + '_' + str(uuid.uuid4())))
+    if file:
+        blob.upload_from_string(file.read(), content_type=file.content_type)
+    elif data:
+        blob.upload_from_string(data, content_type='image/png')
+    # blob.make_public()
+    return blob.public_url

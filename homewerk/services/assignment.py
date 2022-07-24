@@ -5,6 +5,7 @@ from homewerk.services import Singleton
 from homewerk import models as m
 from homewerk.constants import SubmitStatus, NotificationScopes
 from homewerk.services.notification import NotificationService
+from homewerk.utils.file import upload_gcloud_doc
 
 noti_service = NotificationService.get_instance()
 
@@ -42,7 +43,7 @@ class AssignmentService(Singleton):
 
         return assignments
 
-    def create_assignment(self, data):
+    def create_assignment(self, data, file):
         asm = m.Assignment()
         course_id = data.get('course_id')
         if course_id:
@@ -60,6 +61,9 @@ class AssignmentService(Singleton):
         if instruction:
             asm.instruction = instruction
 
+        file_url = upload_gcloud_doc(name, file)
+        asm.attachment = file_url
+
         m.db.session.add(asm)
         m.db.session.commit()
         course = m.Course.query.filter(m.Course.id == asm.course_id).first()
@@ -70,7 +74,7 @@ class AssignmentService(Singleton):
         return asm
 
 
-    def update_assignment(self, data):
+    def update_assignment(self, data, file):
         id = data.get('id')
         assignment = m.Assignment.query.filter(m.Assignment.id == id).first()
 
@@ -90,6 +94,8 @@ class AssignmentService(Singleton):
         if instruction:
             assignment.instruction = instruction
 
+        file_url = upload_gcloud_doc(name, file)
+        assignment.attachment = file_url
         m.db.session.commit()
         return assignment
 

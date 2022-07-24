@@ -22,7 +22,8 @@ class SubmitService(Singleton):
             query = query.filter(m.Submit.assignment_id == assignment_id)
 
         user_id = data.get('user_id')
-        user_id = g.user.id
+        if not data.get('user_id'):
+            user_id = g.user.id
         if user_id:
             query = query.filter(m.Submit.user_id == user_id)
 

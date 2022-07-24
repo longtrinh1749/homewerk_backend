@@ -10,8 +10,6 @@ from homewerk import utils
 class UserService(Singleton):
     def get_user(self, data):
         query = m.User.query
-        if not data:
-            return None
         if data.get('id'):
             query = query.filter(m.User.id == data.get('id'))
         else:

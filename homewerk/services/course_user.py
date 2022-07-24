@@ -11,6 +11,9 @@ class CourseUserService(Singleton):
     def add_user_to_course(self, data):
         course_user = m.UserCourse()
         course_user.course_id = data.get('course_id')
+        if data.get('code'):
+            course_id = m.Course.query.filter(m.Course.code == data.get('code')).first().id
+            course_user.course_id = course_id
         user_id = data.get('user_id')
         user_id = g.user.id
         course_user.user_id = user_id

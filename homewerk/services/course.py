@@ -28,11 +28,13 @@ class CourseService(Singleton):
 
     def create_course(self, data):
         course = m.Course()
+        user_id = data.get('user_id')
+        user_id = g.user.id
         course.name = data.get('name')
         course.clazz = data.get('class')
         course.school = data.get('school')
         course.school_year = data.get('school_year')
-        course.created_by = data.get('user_id')
+        course.created_by = user_id
         m.db.session.add(course)
         m.db.session.flush()
         self.add_course_user(course.id, course.created_by)

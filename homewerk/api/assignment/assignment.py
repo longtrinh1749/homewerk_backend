@@ -3,6 +3,9 @@ from flask import request
 import flask_restx as _fr
 from datetime import datetime
 
+from flask_restx.reqparse import RequestParser
+from werkzeug.datastructures import FileStorage
+
 from homewerk.api.assignment.schema import (
     get_assignment_res_model,
     post_assignment_req_model,
@@ -36,18 +39,32 @@ class Assignment(_fr.Resource):
         assignments = service.get_assignments(data)
         return {'assignments': assignments}
 
+    upload_param = RequestParser(bundle_errors=True)
+    upload_param.add_argument('file', location='files',
+                              type=FileStorage, required=True)
+    upload_param.add_argument('course_id', default=False, type=int)
+    upload_param.add_argument('name', default=False, type=str)
+    upload_param.add_argument('due', default=False, type=str)
+    upload_param.add_argument('instruction', default=False, type=str)
     @assignment_ns.marshal_with(get_assignment_res_schema)
-    @assignment_ns.expect(post_assignment_req_schema)
+    @assignment_ns.expect(upload_param)
     @token_auth.login_required(role='ROLE.TEACHER')
     def post(self):
-        data = request.json
-        assignment = service.create_assignment(data)
+        data = request.form
+        assignment = service.create_assignment(data, request.files['file'])
         return assignment
 
+    put_assignment_param = RequestParser(bundle_errors=True)
+    put_assignment_param.add_argument('file', location='files',
+                              type=FileStorage, required=True)
+    put_assignment_param.add_argument('id', default=False, type=int)
+    put_assignment_param.add_argument('name', default=False, type=str)
+    put_assignment_param.add_argument('due', default=False, type=str)
+    put_assignment_param.add_argument('instruction', default=False, type=str)
     @assignment_ns.marshal_with(get_assignment_res_schema)
-    @assignment_ns.expect(put_assignment_req_schema)
+    @assignment_ns.expect(put_assignment_param)
     @token_auth.login_required(role='ROLE.TEACHER')
     def put(self):
-        data = request.json
-        assignment = service.update_assignment(data)
+        data = request.form
+        assignment = service.update_assignment(data, request.files['file'])
         return assignment

@@ -13,5 +13,6 @@ class Assignment(db.Model, m.TimestampMixin):
     instruction = Column(String(500))
     max_score = Column(Integer, default=10)
     score_type = Column(String(50), default='number')
+    attachment = Column(String(255))
 
     course = db.relationship('Course', backref='assignments')
