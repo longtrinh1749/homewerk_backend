@@ -81,19 +81,22 @@ class Token(_fr.Resource):
         token = g.user.generate_auth_token()
         return jsonify({'token': token,
                         'expired_in': JWT_EXPIRED_HOURS,
-                        'role': g.user.role})
+                        'role': g.user.role,
+                        'username': g.user.username})
 
     @token_auth.login_required
     def post(self):
         token = g.user.generate_auth_token()
         return jsonify({'token': token,
                         'expired_in': 7,
-                        'role': g.user.role})
+                        'role': g.user.role,
+                        'username': g.user.username})
 
     @token_auth.login_required
     def put(self):
         token = g.user.generate_auth_token()
         return jsonify({'token': token,
                         'expired_in': 7,
-                        'role': g.user.role})
+                        'role': g.user.role,
+                        'username': g.user.username})
 

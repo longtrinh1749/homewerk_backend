@@ -38,6 +38,7 @@ class UserService(Singleton):
             m.db.session.add(user)
             m.db.session.commit()
         except sqlalchemy.exc.IntegrityError:
+            abort(400)
             return None
 
         return user
@@ -82,6 +83,7 @@ class UserService(Singleton):
         user = m.User.query.get(id)
         old_password = data.get('old_password')
         if old_password != user.password:
+            abort(400)
             return "Wrong password"
         new_password = data.get('new_password')
         if new_password:

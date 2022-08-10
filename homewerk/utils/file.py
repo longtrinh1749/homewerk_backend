@@ -47,6 +47,8 @@ def save_b64_file(data: str, work_id: int):
     #     img_path = upload_gcloud_file(file=f, result=True)
     #     return img_path
 
+    # with open("my_file.png", "wb") as binary_file:
+    #     binary_file.write(img_data)
     return upload_gcloud_file(data=img_data, result=True)
 
 def gen_work_filename(work_id, result):
@@ -69,7 +71,7 @@ def upload_gcloud_file(file=None, data=None, result=False):
     # blob.make_public()
     return blob.public_url
 
-def  upload_gcloud_doc(name, file=None, data=None):
+def upload_gcloud_doc(name, file=None, data=None):
     load_dotenv()
     storage_client = storage.Client().from_service_account_json(GCLOUD_KEY_PATH)
     bucket = storage_client.get_bucket(GCLOUD_BUCKET)

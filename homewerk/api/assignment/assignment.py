@@ -66,5 +66,5 @@ class Assignment(_fr.Resource):
     @token_auth.login_required(role='ROLE.TEACHER')
     def put(self):
         data = request.form
-        assignment = service.update_assignment(data, request.files['file'])
+        assignment = service.update_assignment(data, request.files.get('file'))
         return assignment

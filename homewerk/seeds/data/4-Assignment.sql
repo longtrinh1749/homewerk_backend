@@ -28,3 +28,5 @@ insert into `assignments` (`id`, `course_id`, `name`, `due`, `active`, `instruct
 (27, 5, 'Phòng tránh ngộ độc khi ở nhà', '2022-05-16 01:00:00', 1,'Trả lời câu 2 trong SGK trang 30'),
 (28, 5, 'Giữ sạch nhà ở', '2022-07-18 04:00:00', 1,'Trả lời câu 3 trong SGK trang 14'),
 (29, 5, 'Ôn tập chủ đề gia đình', '2022-06-16 01:00:00', 1,'Trả lời câu 3 trong SGK trang 83');
+
+update assignments set max_score = 10;

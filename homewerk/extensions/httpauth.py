@@ -9,7 +9,7 @@ basic_auth = HTTPBasicAuth()
 def verify_password(username, password):
         # try to authenticate with username/password
     user = User.query.filter_by(username=username).first()
-    if not user and not user.verify_password(password) and not user.password == password:
+    if not user or (not user.verify_password(password) and not user.password == password):
         return False
     g.user = user
     return True
