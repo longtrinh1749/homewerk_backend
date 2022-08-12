@@ -123,5 +123,5 @@ class StudentssScore(_fr.Resource):
     @token_auth.login_required(role='ROLE.TEACHER')
     def get(self):
         data = request.args
-        students = score_service.get_top_students_score_in_course(data['course_id'], display=bool(int(data['display'])))
+        students = score_service.get_top_students_score_in_course(data['course_id'], display=True)
         return {'students': students}
