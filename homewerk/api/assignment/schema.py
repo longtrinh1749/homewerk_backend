@@ -11,6 +11,7 @@ get_assignment_res_model = {
     'graded': fields.Integer(attribute='total_graded'),
     'status': fields.String(attribute='status'),
     'attachment': fields.String,
+    'score': fields.Integer,
 }
 
 post_assignment_req_model = {
