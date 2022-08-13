@@ -35,12 +35,14 @@ mysqlclient==2.1.0
 packaging==21.3
 passlib==1.7.4
 protobuf==3.20.1
+psycopg2-binary==2.9.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 PyJWT==2.4.0
 pyparsing==3.0.8
 pyrsistent==0.18.1
 python-dotenv==0.20.0
+python-version==0.0.2
 pytz==2022.1
 requests==2.27.1
 rsa==4.8
