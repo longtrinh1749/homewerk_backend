@@ -126,7 +126,7 @@ class NotificationService(Singleton):
             "course": assignment.course_id,
             "assignment": submit.assignment_id,
         }
-        noti.scope_id = submit.id
+        noti.scope_id = submit.assignment_id
         noti.action = NotificationActions.UPDATE_ASSIGNMENT
         course = m.Course.query.filter(m.Course.id == assignment.course_id).first()
         noti.trigger_id = course.created_by

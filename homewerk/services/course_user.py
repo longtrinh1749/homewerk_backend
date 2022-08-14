@@ -9,6 +9,14 @@ noti_service = NotificationService.get_instance()
 
 class CourseUserService(Singleton):
     def add_user_to_course(self, data):
+        course_user = m.UserCourse.query.filter(
+            m.UserCourse.course_id == data.get('course_id'), m.UserCourse.user_id == g.user.id
+        ).first()
+        if course_user:
+            course_user.active = True
+            m.db.session.commit()
+            return {'result': True}
+
         course_user = m.UserCourse()
         course_user.course_id = data.get('course_id')
         if data.get('code'):

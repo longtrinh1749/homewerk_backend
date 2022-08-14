@@ -60,6 +60,11 @@ class SubmitService(Singleton):
                 work = m.Work.query.get(work_id)
                 work.result_path = file_path
 
+
+        noti_service.subcribe_notification(user_id=submit.user_id,
+                                           scope=NotificationScopes.ASSIGNMENT,
+                                           scope_id=submit.assignment_id)
+
         m.db.session.commit()
         if result:
             noti_service.grade_assignment_notification(submit)

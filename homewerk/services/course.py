@@ -19,7 +19,7 @@ class CourseService(Singleton):
             query = query.filter(m.Course.id == data.get('id'))
         if g.user.id:
             query = query.filter(m.UserCourse.course_id == m.Course.id)
-            query = query.filter(m.UserCourse.user_id == g.user.id)
+            query = query.filter(m.UserCourse.user_id == g.user.id, m.UserCourse.active == True)
         courses = query.filter(m.Course.active == True).order_by(desc(m.Course.id)).all()
         for c in courses:
             students = m.UserCourse.query.filter(m.UserCourse.course_id == c.id).all()
@@ -64,6 +64,14 @@ class CourseService(Singleton):
         return course_user.course
 
     def add_course_user(self, course_id, user_id):
+        course_user = m.UserCourse.query.filter(
+            m.UserCourse.course_id == course_id, m.UserCourse.user_id == user_id
+        ).first()
+        if course_user:
+            course_user.active = True
+            m.db.session.commit()
+            return course_user.course
+
         course_user = m.UserCourse()
         course_user.course_id = course_id
         course_user.user_id = user_id
