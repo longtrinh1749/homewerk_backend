@@ -1,0 +1,33 @@
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+insert into assignments (id, course_id, name, due, active, instruction) values
+(1, 1, 'Bảng cộng 1', '2022-01-19 02:00:00', TRUE,'Làm bài 4 SGK trang 65theo 2 cách khác nhau'),
+(2, 1, 'Bảng cộng 2', '2022-09-23 06:00:00', TRUE,'Làm bài 2 SGK trang 71theo 2 cách khác nhau'),
+(3, 1, 'Bảng cộng 3', '2022-04-10 04:00:00', TRUE,'Làm bài 5 SGK trang 3theo 1 cách khác nhau'),
+(4, 1, 'Bảng cộng 4', '2022-03-26 03:00:00', TRUE,'Làm bài 3 SGK trang 20theo 3 cách khác nhau'),
+(5, 1, 'Bảng cộng 5', '2022-05-27 04:00:00', TRUE,'Làm bài 4 SGK trang 91theo 1 cách khác nhau'),
+(6, 1, 'Bảng cộng 6', '2022-09-27 07:00:00', TRUE,'Làm bài 5 SGK trang 95theo 3 cách khác nhau'),
+(7, 1, 'Bảng cộng 7', '2022-05-21 09:00:00', TRUE,'Làm bài 4 SGK trang 43theo 2 cách khác nhau'),
+(8, 1, 'Bảng cộng 8', '2022-07-23 09:00:00', TRUE,'Làm bài 2 SGK trang 96theo 3 cách khác nhau'),
+(9, 1, 'Bảng cộng 9', '2022-05-27 07:00:00', TRUE,'Làm bài 1 SGK trang 100theo 3 cách khác nhau'),
+(10, 2, 'Tôi là học sinh lớp 2', '2022-03-24 06:00:00', TRUE,'Trả lời câu 1 trong SGK trang 40'),
+(11, 2, 'Ngày hôm qua đâu rồi?', '2022-03-10 09:00:00', TRUE,'Trả lời câu 4 trong SGK trang 2'),
+(12, 2, 'Niềm vui của Bi và Bống', '2022-05-21 04:00:00', TRUE,'Trả lời câu 1 trong SGK trang 86'),
+(13, 2, 'Làm việc thật là vui', '2022-03-13 03:00:00', TRUE,'Trả lời câu 4 trong SGK trang 23'),
+(14, 2, 'Em có xinh không?', '2022-04-21 07:00:00', TRUE,'Trả lời câu 1 trong SGK trang 41'),
+(15, 3, 'At my birthday party', '2022-03-26 06:00:00', TRUE,'Trả lời câu 3 trong SGK trang 85'),
+(16, 3, 'In the backyard', '2022-01-11 02:00:00', TRUE,'Trả lời câu 4 trong SGK trang 9'),
+(17, 3, 'At the seaside', '2022-05-20 01:00:00', TRUE,'Trả lời câu 3 trong SGK trang 31'),
+(18, 3, 'In the countryside', '2022-09-16 01:00:00', TRUE,'Trả lời câu 4 trong SGK trang 35'),
+(19, 3, 'In the classroom', '2022-05-11 02:00:00', TRUE,'Trả lời câu 2 trong SGK trang 17'),
+(20, 4, 'Vẻ đẹp quê hương em', '2022-01-23 02:00:00', TRUE,'Trả lời câu 1 trong SGK trang 58'),
+(21, 4, 'Em yêu quê hương', '2022-09-23 04:00:00', TRUE,'Trả lời câu 4 trong SGK trang 29'),
+(22, 4, 'Kính trọng thầy cô giáo', '2022-09-13 03:00:00', TRUE,'Trả lời câu 4 trong SGK trang 49'),
+(23, 4, 'Yêu quý bạn bè', '2022-06-23 06:00:00', TRUE,'Trả lời câu 2 trong SGK trang 13'),
+(24, 4, 'Quý trọng thời gian', '2022-09-19 02:00:00', TRUE,'Trả lời câu 2 trong SGK trang 45'),
+(25, 5, 'Các thế hệ trong gia đình', '2022-02-25 04:00:00', TRUE,'Trả lời câu 2 trong SGK trang 11'),
+(26, 5, 'Nghề nghiệp của người lớn trong gia đình', '2022-08-13 01:00:00', TRUE,'Trả lời câu 3 trong SGK trang 18'),
+(27, 5, 'Phòng tránh ngộ độc khi ở nhà', '2022-05-16 01:00:00', TRUE,'Trả lời câu 2 trong SGK trang 30'),
+(28, 5, 'Giữ sạch nhà ở', '2022-07-18 04:00:00', TRUE,'Trả lời câu 3 trong SGK trang 14'),
+(29, 5, 'Ôn tập chủ đề gia đình', '2022-06-16 01:00:00', TRUE,'Trả lời câu 3 trong SGK trang 83');
+
+update assignments set max_score = 10;

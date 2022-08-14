@@ -51,7 +51,7 @@ class Assignment(_fr.Resource):
     @token_auth.login_required(role='ROLE.TEACHER')
     def post(self):
         data = request.form
-        assignment = service.create_assignment(data, request.files['file'])
+        assignment = service.create_assignment(data, request.files.get('file'))
         return assignment
 
     put_assignment_param = RequestParser(bundle_errors=True)

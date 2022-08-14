@@ -37,8 +37,10 @@ class AssignmentService(Singleton):
                                                m.Submit.user_id == user_id).first()
                 if submit:
                     a.status = submit.status
+                    a.score = submit.result
                 else:
                     a.status = ''
+                    a.score = 0
 
 
         return assignments
@@ -61,8 +63,9 @@ class AssignmentService(Singleton):
         if instruction:
             asm.instruction = instruction
 
-        file_url = upload_gcloud_doc(name, file)
-        asm.attachment = file_url
+        if file:
+            file_url = upload_gcloud_doc(name, file)
+            asm.attachment = file_url
 
         m.db.session.add(asm)
         m.db.session.commit()
@@ -94,8 +97,9 @@ class AssignmentService(Singleton):
         if instruction:
             assignment.instruction = instruction
 
-        file_url = upload_gcloud_doc(name, file)
-        assignment.attachment = file_url
+        if file:
+            file_url = upload_gcloud_doc(name, file)
+            assignment.attachment = file_url
         m.db.session.commit()
         return assignment
 
