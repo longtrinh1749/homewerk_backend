@@ -1,3 +1,5 @@
+import traceback
+
 import sqlalchemy.exc
 from flask import g
 from flask_restx import abort
@@ -23,6 +25,7 @@ class UserService(Singleton):
     def create_user(self, data):
         try:
             if not (data.get('username') and data.get('password')):
+                traceback.print_exc()
                 abort(400)
             user = m.User()
             user.name = data.get('name')
@@ -38,6 +41,7 @@ class UserService(Singleton):
             m.db.session.add(user)
             m.db.session.commit()
         except sqlalchemy.exc.IntegrityError:
+            traceback.print_exc()
             abort(400)
             return None
 
@@ -57,6 +61,7 @@ class UserService(Singleton):
             if (data.get('email')): user.email = data.get('email')
             m.db.session.commit()
         except sqlalchemy.exc.IntegrityError:
+            traceback.print_exc()
             return None
 
         return user
@@ -83,6 +88,7 @@ class UserService(Singleton):
         user = m.User.query.get(id)
         old_password = data.get('old_password')
         if old_password != user.password:
+            traceback.print_exc()
             abort(400)
             return "Wrong password"
         new_password = data.get('new_password')

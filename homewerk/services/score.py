@@ -1,4 +1,5 @@
 import copy
+import traceback
 
 from flask import g
 
@@ -21,6 +22,7 @@ class ScoreService(Singleton):
                 try:
                     r = float(s.result) or 0
                 except Exception:
+                    traceback.print_exc()
                     r = 0
                 total_score = total_score + r
             c.avg_score = total_score / len(assignment_ids)
@@ -58,6 +60,7 @@ class ScoreService(Singleton):
                 try:
                     r = float(s.result) or 0
                 except Exception:
+                    traceback.print_exc()
                     r = 0
                 total_score = total_score + r/asm.max_score
             student.avg_score = total_score / len(assignment_ids) * 10
