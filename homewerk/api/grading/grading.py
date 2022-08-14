@@ -96,7 +96,7 @@ class CoursesScore(_fr.Resource):
 class AssignmentsScore(_fr.Resource):
     @grading_ns.doc(params={'course_id': 'Course ID', 'display': 'Display', 'excel': 'Excel file return'})
     @grading_ns.marshal_with(get_assignments_res_schema)
-    # @token_auth.login_required(role='ROLE.TEACHER')
+    @token_auth.login_required(role='ROLE.TEACHER')
     def get(self):
         data = request.args
         assignments = score_service.get_top_assignment_score(data['course_id'], 0, display=data['display'])
@@ -109,7 +109,7 @@ class AssignmentsScore(_fr.Resource):
 @grading_ns.route('/excel', methods=['GET'])
 class Export(_fr.Resource):
     @grading_ns.doc(params={'course_id': 'Course ID'})
-    @token_auth.login_required(role='ROLE.TEACHER')
+    # @token_auth.login_required(role='ROLE.TEACHER')
     def get(self):
         data = request.args
         output, filename = excel_service.export_course_transcript(data['course_id'])

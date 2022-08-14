@@ -39,25 +39,25 @@ class SavedService(Singleton):
                 return old_saved
 
             if saved.type == 'course':
-                saved.path = {
+                saved.path = str({
                     'course': saved.type_id
-                }
+                })
             elif saved.type == 'assignment':
                 assignment = m.Assignment.query.filter(m.Assignment.id == type_id).first()
-                saved.path = {
+                saved.path = str({
                     'course': assignment.course_id,
                     'assignment': saved.type_id
-                }
+                })
             elif saved.type == 'submit':
                 submit = m.Submit.query.filter(m.Submit.id == type_id).first()
                 assignment = m.Assignment.query.filter(m.Assignment.id == submit.assignment_id).first()
                 student = m.User.query.filter(m.User.id == submit.user_id).first()
-                saved.path = {
+                saved.path = str({
                     'course': assignment.course_id,
                     'assignment': assignment.id,
                     'submit': saved.type_id,
                     'student': submit.user_id,
-                }
+                })
                 saved.type_name = f'{student.name}\'s submission for {assignment.name}'
 
         m.db.session.add(saved)

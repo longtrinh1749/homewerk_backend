@@ -103,9 +103,9 @@ class NotificationService(Singleton):
         noti = m.Notification()
         noti.scope = NotificationScopes.COURSE
         noti.type = NotificationTypes.ASSIGNMENT
-        noti.path = {
+        noti.path = str({
             "course": asm.course_id,
-        }
+        })
         noti.scope_id = asm.course_id
         noti.action = NotificationActions.CREATE_ASSIGNMENT
         course = m.Course.query.filter(m.Course.id == asm.course_id).first()
@@ -122,10 +122,10 @@ class NotificationService(Singleton):
         noti.scope = NotificationScopes.STUDENT_WORK
         noti.type = NotificationTypes.ASSIGNMENT
         assignment = m.Assignment.query.filter(m.Assignment.id == submit.assignment_id).first()
-        noti.path = {
+        noti.path = str({
             "course": assignment.course_id,
             "assignment": submit.assignment_id,
-        }
+        })
         noti.scope_id = submit.id
         noti.action = NotificationActions.UPDATE_ASSIGNMENT
         course = m.Course.query.filter(m.Course.id == assignment.course_id).first()
@@ -144,10 +144,10 @@ class NotificationService(Singleton):
         noti.type = NotificationTypes.ASSIGNMENT
         noti.action = NotificationActions.UPDATE_ASSIGNMENT
         assignment = m.Assignment.query.filter(m.Assignment.id == submit.assignment.id).first()
-        noti.path = {
+        noti.path = str({
             "course": assignment.course_id,
             "assignment": submit.assignment_id,
-        }
+        })
         noti.scope_id = submit.assignment_id
         course = m.Course.query.filter(m.Course.id == assignment.course_id).first()
         noti.trigger_id = submit.user_id
@@ -165,9 +165,9 @@ class NotificationService(Singleton):
         noti.scope = NotificationScopes.COURSE
         noti.type = NotificationTypes.COURSE
         noti.action = NotificationActions.STUDENT_JOIN
-        noti.path = {
+        noti.path = str({
             "course": course_user.course_id
-        }
+        })
         noti.scope_id = course_user.course_id
         noti.trigger_id = 0 # system
         student = m.User.query.filter(m.User.id == course_user.user_id).first()

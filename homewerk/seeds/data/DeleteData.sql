@@ -2,6 +2,7 @@ delete from work_objects;
 delete from works;
 delete from submits;
 delete from saved;
+delete from notifications;
 delete from notification_subcriber;
 delete from assignments;
 delete from user_course;
